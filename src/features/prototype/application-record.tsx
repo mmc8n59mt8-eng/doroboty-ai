@@ -5,7 +5,7 @@ import { RecordSheet } from "@/components/record-sheet";
 import { CvAttachment } from "./cv-attachment";
 import { MatchScore } from "./match-score";
 import { stageLabels, type Application, type Stage } from "./model";
-import { ContributionCard } from "./own-contribution";
+import { ContributionCard, DraiMatchScore } from "./own-contribution";
 
 type RecordEvent = { stage: Stage; at: string; note?: string };
 const dateFormat = new Intl.DateTimeFormat("pl-PL", {
@@ -49,22 +49,47 @@ export function ApplicationRecord({
           <span aria-hidden="true">/</span>
           <span aria-current="page">{title}</span>
         </nav>
-        <h1>{title}</h1>
-        <div className="record-meta">
-          <span>
-            {context} · {companyName}
-          </span>
-          <span className="record-stage" tabIndex={-1} ref={statusRef}>
-            {stageLabels[application.stage]}
-          </span>
-          <MatchScore score={application.score} />
-          {submitted && (
+        {!candidate && (
+          <p className="drai-mono drai-facts" style={{ margin: 0 }}>
             <span>
-              Złożona:{" "}
-              <time dateTime={submitted.at}>{dateFormat.format(new Date(submitted.at))}</time>
+              Status /{" "}
+              <b className="record-stage" tabIndex={-1} ref={statusRef}>
+                {stageLabels[application.stage]}
+              </b>
             </span>
-          )}
-        </div>
+            {submitted && (
+              <span>
+                Wysłana /{" "}
+                <b>
+                  <time dateTime={submitted.at}>{dateFormat.format(new Date(submitted.at))}</time>
+                </b>
+              </span>
+            )}
+          </p>
+        )}
+        <h1>{title}</h1>
+        {!candidate && (
+          <p className="drai-record-sub">
+            {context} · {companyName}
+          </p>
+        )}
+        {candidate && (
+          <div className="record-meta">
+            <span>
+              {context} · {companyName}
+            </span>
+            <span className="record-stage" tabIndex={-1} ref={statusRef}>
+              {stageLabels[application.stage]}
+            </span>
+            <MatchScore score={application.score} />
+            {submitted && (
+              <span>
+                Złożona:{" "}
+                <time dateTime={submitted.at}>{dateFormat.format(new Date(submitted.at))}</time>
+              </span>
+            )}
+          </div>
+        )}
       </header>
       <div className="recruiting-layout">
         <RecordSheet
@@ -75,7 +100,15 @@ export function ApplicationRecord({
                   {
                     value: "contribution",
                     label: "Własny wkład",
-                    content: <ContributionCard contribution={application.contribution} />,
+                    content: (
+                      <>
+                        <ContributionCard
+                          contribution={application.contribution}
+                          jobTitle={application.jobTitle}
+                        />
+                        <DraiMatchScore score={application.score} />
+                      </>
+                    ),
                   },
                 ]
               : []),
@@ -86,6 +119,9 @@ export function ApplicationRecord({
                 <>
                   <h3>Przesłana aplikacja</h3>
                   <p>{application.answer}</p>
+                  {!candidate && !application.contribution && (
+                    <DraiMatchScore score={application.score} />
+                  )}
                 </>
               ),
             },

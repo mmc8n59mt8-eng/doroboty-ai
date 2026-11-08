@@ -690,9 +690,10 @@ test("process sheet keeps notes across keyboard tabs and saves stage history wit
   await choose(page, "Karolina Wiśniewska");
   await page.goto("/#/app/kandydaci/application-example");
   const note = page.getByLabel("Notatka rekrutacyjna (widoczna pracodawcy)");
-  await expect(
-    page.locator(".record-meta").getByText("Match Score: 72%", { exact: true }),
-  ).toBeVisible();
+  // "Sieć połączeń": the score sits below the work example in mono, not as a header pill.
+  await expect(page.locator(".record-meta")).toHaveCount(0);
+  await expect(page.locator("#drai-score-heading")).toHaveText("Match Score / 72 / 100");
+  await expect(page.locator(".drai-score")).toContainText("Nie mierzy umiejętności.");
   await expect(page.getByText("Wynik przykładowy", { exact: true })).toHaveCount(0);
   await expect(page.locator("iframe[title='Podgląd CV (PDF)']")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Pobierz CV (PDF)", exact: true })).toHaveCount(0);

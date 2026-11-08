@@ -1,0 +1,572 @@
+/*
+ * DesignSystemDoRobotyAI "Sieć połączeń" — scoped adoption on the employer candidate list
+ * and application detail. Values are copied from the Super Brain skill core
+ * (7-Skills/design-system-doroboty-ai/assets/components.html, up to END CORE).
+ * Approved 2026-11-08: brick accent, light only, Archivo + Instrument Serif + JetBrains Mono.
+ * Fonts are not bundled yet: the stacks fall back to Helvetica Neue / Georgia / Menlo.
+ * Everything is scoped under .drai-theme so the rest of the app keeps Poster People.
+ */
+.drai-theme {
+  --drai-paper: #f7f3ef;
+  --drai-frame: #fffcfb;
+  --drai-card: #fffdfc;
+  --drai-ink: #17161d;
+  --drai-text: #3a3340;
+  --drai-muted: #736b79; /* darkened from #7e7684: 4.63:1 on paper, >=4.8:1 on frame (WCAG AA) */
+  --drai-rule: #e7e1e3;
+  --drai-accent: #b5533c;
+  --drai-accent-tint: #f3dcd4;
+  --drai-selected-bg: #17161d;
+  --drai-selected-fg: #fffcfb;
+  --drai-ok: #3f6b4f;
+  --drai-error: #a3271f;
+  --drai-focus: #17161d;
+  --drai-font-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --drai-font-voice: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --drai-font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --drai-h1: clamp(26px, 3.2vw, 40px);
+  --drai-h2: clamp(22px, 2.6vw, 32px);
+  --drai-mono: 11.5px;
+  --drai-grid: 32px;
+  --drai-radius-card: 12px;
+  --drai-shadow-card:
+    inset 0 0 11px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 16px 24px -8px rgba(0, 0, 0, 0.05);
+
+  color: var(--drai-text);
+  font-family: var(--drai-font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.drai-theme :focus-visible {
+  outline: 2px solid var(--drai-focus);
+  outline-offset: 2px;
+}
+
+/* --- construction --- */
+.drai-grid {
+  background-color: var(--drai-paper);
+  background-image:
+    linear-gradient(var(--drai-rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--drai-rule) 1px, transparent 1px);
+  background-size: var(--drai-grid) var(--drai-grid);
+}
+.drai-shell {
+  border: 1px solid var(--drai-rule);
+  padding: 16px;
+}
+.drai-frame {
+  position: relative;
+  border: 1px solid var(--drai-rule);
+  background: var(--drai-frame);
+}
+
+/* --- type layers --- */
+.drai-theme :is(h1, h2, h3, h4) {
+  font-family: var(--drai-font-sans);
+}
+.drai-theme :is(.drai-h1, .drai-h2, .drai-h3) {
+  margin: 0;
+  color: var(--drai-ink);
+  font-weight: 800;
+  font-stretch: 115%;
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+}
+.drai-theme .drai-h1 {
+  font-size: var(--drai-h1);
+  font-stretch: 112%;
+  line-height: 1.1;
+}
+.drai-theme .drai-h2 {
+  font-size: var(--drai-h2);
+  line-height: 1.15;
+}
+.drai-theme .drai-h3 {
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.drai-theme .drai-mono,
+.drai-theme .record-reading .drai-mono {
+  color: var(--drai-muted);
+  font-family: var(--drai-font-mono);
+  font-size: var(--drai-mono);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.drai-theme .drai-mono b {
+  color: var(--drai-ink);
+  font-weight: 500;
+}
+.drai-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+}
+.drai-theme .drai-help {
+  color: var(--drai-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* --- buttons (applied to the shared Base UI Button through className) --- */
+.drai-theme .drai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 0;
+  padding: 12px 18px;
+  border: 1px solid var(--drai-rule);
+  border-radius: 0;
+  background: var(--drai-frame);
+  color: var(--drai-ink);
+  font: 500 14px/1 var(--drai-font-sans);
+  letter-spacing: normal;
+  --control-hover-bg: #fbf7f4;
+}
+.drai-theme .drai-btn--primary {
+  position: relative;
+  border-color: var(--drai-accent);
+  background: var(--drai-accent-tint);
+  --control-hover-bg: #efcfc4;
+}
+.drai-theme .drai-btn--primary::before,
+.drai-theme .drai-btn--primary::after {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--drai-accent);
+  background: var(--drai-frame);
+  content: "";
+}
+.drai-theme .drai-btn--primary::before {
+  top: -4px;
+  left: -4px;
+}
+.drai-theme .drai-btn--primary::after {
+  right: -4px;
+  bottom: -4px;
+}
+
+/* --- inputs --- */
+.drai-theme :is(input:not([type="checkbox"]), textarea, .drai-input) {
+  min-height: 44px;
+  border: 1px solid var(--drai-rule);
+  border-radius: 0;
+  background: #fff;
+  box-shadow: none;
+  color: var(--drai-ink);
+  font: 15px var(--drai-font-sans);
+}
+.drai-theme :is(input:not([type="checkbox"]), textarea):focus {
+  border-color: var(--drai-focus);
+  outline: 2px solid var(--drai-focus);
+  outline-offset: 0;
+}
+.drai-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.drai-theme .drai-field label {
+  color: var(--drai-ink);
+  font-family: var(--drai-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* --- status, tabs --- */
+.drai-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.drai-status::before {
+  width: 7px;
+  height: 7px;
+  border: 1px solid currentColor;
+  content: "";
+}
+.drai-status--new::before {
+  background: var(--drai-ink);
+}
+.drai-status--ok::before {
+  border-color: var(--drai-ok);
+  background: var(--drai-ok);
+}
+.drai-status--rej {
+  color: var(--drai-muted);
+}
+.drai-status--rej::before {
+  background: linear-gradient(45deg, transparent 45%, currentColor 45% 55%, transparent 55%);
+}
+.drai-theme .drai-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  width: max-content;
+  max-width: 100%;
+  border: 1px solid var(--drai-rule);
+}
+.drai-theme .drai-tabs button {
+  all: unset;
+  padding: 8px 14px;
+  border-right: 1px solid var(--drai-rule);
+  color: var(--drai-text);
+  cursor: pointer;
+  font-family: var(--drai-font-sans);
+  font-size: 13px;
+  --control-hover-bg: #fbf7f4;
+}
+.drai-theme .drai-tabs button:last-child {
+  border-right: 0;
+}
+.drai-theme .drai-tabs button[aria-pressed="true"] {
+  background: var(--drai-selected-bg);
+  color: var(--drai-selected-fg);
+  --control-hover-bg: var(--drai-selected-bg);
+  --control-hover-text: var(--drai-selected-fg);
+}
+.drai-theme .drai-tabs button:focus-visible {
+  outline: 2px solid var(--drai-focus);
+  outline-offset: -2px;
+}
+
+/* --- cards, quote, score --- */
+.drai-card {
+  padding: 20px;
+  border-radius: var(--drai-radius-card);
+  background: var(--drai-card);
+  box-shadow: var(--drai-shadow-card);
+}
+.drai-theme .drai-card h4 {
+  margin: 0 0 8px;
+  color: var(--drai-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.drai-theme .drai-card p {
+  margin: 0;
+  color: var(--drai-text);
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.drai-three {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.drai-score {
+  margin-top: 24px;
+  padding: 18px 20px;
+  border: 1px solid var(--drai-rule);
+  background: #fbf7f4;
+}
+.drai-score__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.drai-theme .drai-score__val {
+  font-size: 18px;
+}
+.drai-theme .drai-score__lead {
+  margin: 6px 0 10px;
+  font-size: 14px;
+}
+.drai-theme .drai-score details summary {
+  color: var(--drai-ink);
+  cursor: pointer;
+  font-size: 13.5px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.drai-theme .drai-score details p {
+  max-width: 680px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+/* === Screen: employer candidate list (/#/app/kandydaci) === */
+.drai-page {
+  margin: -8px 0 24px;
+}
+.drai-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 26px 28px 18px;
+  border-bottom: 1px solid var(--drai-rule);
+}
+.drai-head .drai-field {
+  width: min(100%, 320px);
+}
+.drai-toolbar {
+  padding: 16px 28px 4px;
+}
+.drai-apps {
+  margin: 0;
+  padding: 0 0 8px;
+  list-style: none;
+}
+.drai-app {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 4px 10px;
+  align-items: baseline;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--drai-rule);
+}
+.drai-app:last-child {
+  border-bottom: 0;
+}
+.drai-app:hover {
+  background: #fbf7f4;
+}
+.drai-app__mark {
+  color: var(--drai-muted);
+  font-family: var(--drai-font-mono);
+}
+.drai-theme .drai-app__name {
+  color: var(--drai-ink);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.drai-theme .drai-app__name::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+.drai-app {
+  position: relative;
+}
+.drai-app:hover .drai-app__name {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.drai-app__body {
+  grid-column: 2 / 4;
+}
+.drai-theme .drai-app__work {
+  display: -webkit-box;
+  margin: 4px 0 6px;
+  overflow: hidden;
+  color: var(--drai-ink);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.drai-theme .drai-app__work--missing {
+  color: var(--drai-muted);
+}
+.drai-empty {
+  padding: 28px;
+}
+
+/* === Screen: employer application detail (/#/app/kandydaci/:id) === */
+.drai-theme .recruiting-record {
+  padding: 0;
+}
+.drai-theme .recruiting-header {
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid var(--drai-rule);
+}
+.drai-theme .record-breadcrumb {
+  margin-bottom: 10px;
+}
+.drai-theme .back-link {
+  color: var(--drai-text);
+  font-family: var(--drai-font-sans);
+}
+.drai-theme .recruiting-header h1 {
+  margin: 6px 0 6px;
+  color: var(--drai-ink);
+  font-family: var(--drai-font-sans);
+  font-size: var(--drai-h1);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.drai-theme .drai-record-sub {
+  margin: 0;
+  font-size: 15px;
+}
+.drai-theme .record-stage {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--drai-ink);
+  font: inherit;
+}
+.drai-theme .recruiting-layout {
+  gap: 0;
+  padding: 0;
+}
+.drai-theme .recruiting-layout > .record-sheet,
+.drai-theme .record-sheet {
+  padding: 22px 28px 28px;
+  border: 0;
+  border-left: 1px solid var(--drai-rule);
+  border-radius: 0;
+  background: var(--drai-frame);
+  box-shadow: none;
+}
+.drai-theme .recruiting-margin {
+  padding: 22px 24px;
+}
+.drai-theme .recruiting-margin h2 {
+  color: var(--drai-ink);
+  font-family: var(--drai-font-sans);
+  font-size: 17px;
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.drai-theme .record-tabs {
+  gap: 0;
+  width: max-content;
+  max-width: 100%;
+  border: 1px solid var(--drai-rule);
+}
+.drai-theme .record-tabs .record-tab {
+  min-height: 0;
+  padding: 8px 14px;
+  border-right: 1px solid var(--drai-rule);
+  border-radius: 0;
+  color: var(--drai-text);
+  font-family: var(--drai-font-sans);
+  font-size: 13px;
+  font-weight: 400;
+}
+.drai-theme .record-tabs .record-tab:last-child {
+  border-right: 0;
+}
+.drai-theme .record-tab[data-active] {
+  background: var(--drai-selected-bg);
+  color: var(--drai-selected-fg);
+  --control-hover-bg: var(--drai-selected-bg);
+  --control-hover-text: var(--drai-selected-fg);
+}
+.drai-theme .record-tab[data-active]::after {
+  display: none;
+}
+.drai-theme .record-reading {
+  padding: 24px 0;
+}
+.drai-theme .record-reading h3:not(.drai-mono) {
+  margin-bottom: 12px;
+  color: var(--drai-ink);
+  font-family: var(--drai-font-sans);
+  font-size: 17px;
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+.drai-theme .record-reading p:not(.drai-mono, .drai-help) {
+  font-size: 15px;
+  line-height: 1.65;
+}
+.drai-theme .record-section {
+  border-top: 1px solid var(--drai-rule);
+}
+.drai-theme .record-section h3 {
+  color: var(--drai-ink);
+  font-family: var(--drai-font-sans);
+  font-size: 17px;
+  font-weight: 800;
+}
+.drai-theme .record-footer {
+  border-top: 1px solid var(--drai-rule);
+}
+.drai-theme .record-actions {
+  gap: 14px;
+}
+.drai-theme .record-caption {
+  color: var(--drai-muted);
+}
+.drai-theme .process-timeline li::before {
+  border-radius: 0;
+}
+.drai-theme .process-timeline time {
+  font-family: var(--drai-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.drai-theme .process-timeline strong {
+  font-family: var(--drai-font-sans);
+}
+.drai-theme .cv-file-row a {
+  border-radius: 0;
+}
+
+/* Contribution card inside the detail */
+.drai-work__facts {
+  margin: 0 0 16px;
+}
+.drai-question {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--drai-ink);
+  background: var(--drai-frame);
+}
+.drai-theme .drai-question p {
+  margin: 6px 0 0;
+  color: var(--drai-ink);
+  font-size: 15px;
+}
+
+/* --- responsive --- */
+@media (max-width: 950px) {
+  .drai-theme .recruiting-layout > .record-sheet,
+  .drai-theme .record-sheet {
+    border-left: 0;
+    border-bottom: 1px solid var(--drai-rule);
+  }
+}
+@media (max-width: 720px) {
+  .drai-shell {
+    padding: 0;
+    border: 0;
+  }
+  .drai-three {
+    grid-template-columns: 1fr;
+  }
+  .drai-head,
+  .drai-toolbar,
+  .drai-theme .recruiting-header,
+  .drai-theme .recruiting-margin {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+  .drai-app {
+    grid-template-columns: 18px 1fr;
+    padding: 14px 18px;
+  }
+  .drai-app__status {
+    grid-column: 2;
+  }
+  .drai-theme .recruiting-layout > .record-sheet,
+  .drai-theme .record-sheet {
+    padding: 18px;
+  }
+  .drai-theme .record-tabs .record-tab {
+    padding: 8px 10px;
+  }
+}

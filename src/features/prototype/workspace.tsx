@@ -14,7 +14,7 @@ import { currentPerson, publishedJobs, stageLabels, MIN_APPLICATION_ANSWER_LENGT
 import { PageTitle, Empty, NotFound, Notice } from "./shell";
 import { CvAttachment } from "./cv-attachment";
 import { MatchScore } from "./match-score";
-import { OwnershipTag } from "./own-contribution";
+import { EmployerApplications } from "./employer-applications";
 import { RecruitingApplication } from "./recruiting-application";
 import { CandidateApplication } from "./candidate-application";
 
@@ -417,22 +417,29 @@ export function ApplicationsPage({ employer = false }: { employer?: boolean }) {
   const person = currentPerson(state)!;
   const [query, setQuery] = useState("");
   const [params] = useSearchParams();
+  if (employer)
+    return (
+      <EmployerApplications
+        applications={state.applications.filter((x) => x.companyId === person.companyId)}
+        companyName={state.companies.find((x) => x.id === person.companyId)?.name ?? ""}
+      />
+    );
   const applications = state.applications.filter(
     (x) =>
-      (employer ? x.companyId === person.companyId : x.candidateId === person.id) &&
+      x.candidateId === person.id &&
       `${x.candidateName} ${x.jobTitle}`
         .toLocaleLowerCase("pl")
         .includes(query.toLocaleLowerCase("pl")),
   );
   return (
     <>
-      <PageTitle>{employer ? "Kandydaci" : "Moje aplikacje"}</PageTitle>
+      <PageTitle>Moje aplikacje</PageTitle>
       {params.has("wyslano") && (
         <Notice>
           <CheckCircle2 className="inline size-5" /> Aplikacja została wysłana.
         </Notice>
       )}
-      <Field label={employer ? "Szukaj kandydata lub oferty" : "Szukaj oferty"}>
+      <Field label="Szukaj oferty">
         <Input value={query} onChange={(e) => setQuery(e.target.value)} />
       </Field>
       <div className="mt-6 space-y-4">
@@ -443,32 +450,17 @@ export function ApplicationsPage({ employer = false }: { employer?: boolean }) {
                 <div>
                   <Link
                     className="text-xl font-semibold text-[var(--gui-link)]"
-                    to={`${employer ? "/app/kandydaci" : "/app/aplikacje"}/${a.id}`}
+                    to={`/app/aplikacje/${a.id}`}
                   >
-                    {employer ? a.candidateName : a.jobTitle}
+                    {a.jobTitle}
                   </Link>
                   <p className="my-3 text-muted-foreground">
-                    {employer
-                      ? a.jobTitle
-                      : state.companies.find((x) => x.id === a.companyId)?.name}
+                    {state.companies.find((x) => x.id === a.companyId)?.name}
                   </p>
                   <p>{stageLabels[a.stage]}</p>
                 </div>
-                {employer && a.contribution ? (
-                  <OwnershipTag ownership={a.contribution.ownership} />
-                ) : (
-                  <MatchScore score={a.score} />
-                )}
+                <MatchScore score={a.score} />
               </div>
-              {employer &&
-                (a.contribution ? (
-                  <div className="contribution-preview">
-                    <p className="contribution-preview-label">Co zrobił(a) samodzielnie</p>
-                    <p>{a.contribution.ownWork}</p>
-                  </div>
-                ) : (
-                  <p className="mt-4 text-muted-foreground">{a.summary}</p>
-                ))}
             </article>
           ))
         ) : (

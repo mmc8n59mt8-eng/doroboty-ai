@@ -22,66 +22,71 @@ export function RecruitingApplication({ application }: { application: Applicatio
   }, [application.stage]);
 
   return (
-    <>
-      <ApplicationRecord
-        application={application}
-        companyName={company?.name ?? ""}
-        audience="employer"
-        history={application.events}
-        statusRef={statusRef}
-        footer={
-          availableStages.length > 0 ? (
-            <>
-              <p className="record-caption">Notatka zapisze się w historii po zmianie etapu.</p>
-              <div className="record-actions">
-                {availableStages.map((stage) => (
-                  <Button
-                    key={stage}
-                    variant={stage === "rejected" ? "outline" : "default"}
-                    onClick={() => {
-                      if (run({ type: "stage", applicationId: application.id, stage, note })) {
-                        setNote("");
-                        setAnnouncement(`Zapisano etap: ${stageLabels[stage]}.`);
-                        pendingFocus.current = true;
-                      }
-                    }}
-                  >
-                    {stageLabels[stage]}
-                  </Button>
-                ))}
-              </div>
-            </>
-          ) : (
-            <p className="record-caption">
-              {stageLabels[application.stage]}. Brak kolejnych działań w tym procesie.
-            </p>
-          )
-        }
-      >
-        {availableStages.length > 0 ? (
-          <>
-            <h3>
-              <label htmlFor="recruiting-note">Notatka rekrutacyjna</label>
-            </h3>
-            <p className="record-caption" id="recruiting-note-hint">
-              Widoczna tylko pracodawcy w tym scenariuszu.
-            </p>
-            <Textarea
-              id="recruiting-note"
-              aria-label="Notatka rekrutacyjna (widoczna pracodawcy)"
-              aria-describedby="recruiting-note-hint"
-              maxLength={12000}
-              rows={4}
-              value={note}
-              onChange={(event) => setNote(event.target.value)}
-              placeholder="Co warto sprawdzić w rozmowie?"
-            />
-          </>
-        ) : null}
-      </ApplicationRecord>
+    <div className="drai-theme drai-page">
+      <div className="drai-shell drai-grid">
+        <div className="drai-frame">
+          <ApplicationRecord
+            application={application}
+            companyName={company?.name ?? ""}
+            audience="employer"
+            history={application.events}
+            statusRef={statusRef}
+            footer={
+              availableStages.length > 0 ? (
+                <>
+                  <p className="record-caption">Notatka zapisze się w historii po zmianie etapu.</p>
+                  <div className="record-actions">
+                    {availableStages.map((stage) => (
+                      <Button
+                        key={stage}
+                        variant={stage === "rejected" ? "outline" : "default"}
+                        className={stage === "rejected" ? "drai-btn" : "drai-btn drai-btn--primary"}
+                        onClick={() => {
+                          if (run({ type: "stage", applicationId: application.id, stage, note })) {
+                            setNote("");
+                            setAnnouncement(`Zapisano etap: ${stageLabels[stage]}.`);
+                            pendingFocus.current = true;
+                          }
+                        }}
+                      >
+                        {stageLabels[stage]}
+                      </Button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <p className="record-caption">
+                  {stageLabels[application.stage]}. Brak kolejnych działań w tym procesie.
+                </p>
+              )
+            }
+          >
+            {availableStages.length > 0 ? (
+              <>
+                <h3>
+                  <label htmlFor="recruiting-note">Notatka rekrutacyjna</label>
+                </h3>
+                <p className="record-caption" id="recruiting-note-hint">
+                  Widoczna tylko pracodawcy w tym scenariuszu.
+                </p>
+                <Textarea
+                  id="recruiting-note"
+                  aria-label="Notatka rekrutacyjna (widoczna pracodawcy)"
+                  aria-describedby="recruiting-note-hint"
+                  maxLength={12000}
+                  rows={4}
+                  value={note}
+                  onChange={(event) => setNote(event.target.value)}
+                  placeholder="Co warto sprawdzić w rozmowie?"
+                />
+              </>
+            ) : null}
+          </ApplicationRecord>
+        </div>
+      </div>
       <p role="status" className="sr-only">
         {announcement}
       </p>
-    </>
+    </div>
   );
 }
