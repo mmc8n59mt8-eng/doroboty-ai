@@ -144,8 +144,9 @@ test("published job → saved offer/draft → submitted application → employer
   await page
     .getByLabel("Notatka rekrutacyjna (widoczna pracodawcy)")
     .fill("Notatka pracodawcy — tylko panel firmy.");
-  await page.getByRole("button", { name: "W przeglądzie", exact: true }).click();
-  for (const label of ["Zaproszenie na rozmowę", "Pierwsza rozmowa odbyta", "Kolejny etap"])
+  // Opening the application moves it to review; inviting is one action.
+  await expect(page.locator(".record-stage")).toHaveText("W przeglądzie");
+  for (const label of ["Zaproś na rozmowę", "Pierwsza rozmowa odbyta", "Kolejny etap"])
     await page.getByRole("button", { name: label, exact: true }).click();
   await page.reload();
   await expect(page.getByRole("button", { name: "Zatrudnienie", exact: true })).toBeVisible();
@@ -729,18 +730,19 @@ test("process sheet keeps notes across keyboard tabs and saves stage history wit
   await expect(note).toHaveValue(text);
   await expect(preview).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Pobierz CV (PDF)", exact: true })).toHaveCount(0);
-  await page.getByRole("button", { name: "W przeglądzie", exact: true }).click();
+  await expect(page.getByRole("button", { name: "W przeglądzie", exact: true })).toHaveCount(0);
+  await page.getByRole("button", { name: "Zaproś na rozmowę", exact: true }).click();
   await expect(page.locator(".record-stage")).toBeFocused();
   await expect(note).toHaveValue("");
   await expect(page.locator(".process-timeline")).toContainText(text);
   await page.reload();
   await expect(page.locator(".process-timeline")).toContainText(text);
   await note.fill("Zakończenie przykładowego procesu.");
-  await page.getByRole("button", { name: "Proces zakończony", exact: true }).click();
+  await page.getByRole("button", { name: "Odrzuć", exact: true }).click();
   await expect(page.locator(".record-stage")).toBeFocused();
   await expect(note).toHaveCount(0);
   await expect(page.locator(".record-actions")).toHaveCount(0);
-  await expect(page.locator(".process-timeline li")).toHaveCount(3);
+  await expect(page.locator(".process-timeline li")).toHaveCount(4);
   const accessibility = await new AxeBuilder({ page }).include(".recruiting-record").analyze();
   expect(accessibility.violations).toEqual([]);
   await choose(page, "Marek Nowak");

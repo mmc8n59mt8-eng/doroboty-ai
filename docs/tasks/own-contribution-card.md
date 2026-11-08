@@ -46,3 +46,13 @@ Implemented on branch `feature/karta-wlasnego-wkladu` (not committed).
 ### Remaining gaps
 
 - No separate review pass yet.
+
+## Revision after the O1 fit check (2026-11-08, branch design/siec-polaczen)
+
+The product owner's fit check against opportunity O1 (Super Brain `analyses/2026-11-08-zgodnosc-prototypu-z-O1.md`) found that the scenario could inflate the test result. Changes:
+
+1. **Less idealised data.** Six applications to the BrightLabs "AI Operations Specialist" offer (category Apply) were added, including two mixed cases: own responsibility with a vague, unmeasured outcome and Match Score 87; support role with a concrete, measured contribution and Match Score 61. Two Lead scores were adjusted (Ewa 64 → 83, Kacper 85 → 67) so ownership no longer maps one-to-one onto the score. A unit test asserts the overlap.
+2. **One-click invite.** Opening a new application as the employer records "W przeglądzie" (so it appears under "Przejrzane"); the employer actions are "Zaproś na rozmowę" (primary) and "Odrzuć". Stage names in history are unchanged.
+3. **Second category.** The candidate list has an "Ogłoszenie" filter; header count and status counts follow it. The Apply offer is the default for sessions because interviews located the O1 difficulty in roles where AI is a new area; the only Lead interviewee (F2) did not report it.
+
+Validation: `./scripts/verify` passed (exit 0), 29 unit tests and 34/34 browser journeys (two journeys updated for auto-review and the new action labels). Manually checked as Karolina: the offer filter shows 6 Apply applications with mixed labels; opening Michał's application moved it to review; one click invited him and "Zaproszeni [1]" updated. Known limitation: the offer filter resets when returning to the list.

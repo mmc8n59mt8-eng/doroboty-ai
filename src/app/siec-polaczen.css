@@ -633,3 +633,23 @@
     padding: 8px 10px;
   }
 }
+.drai-head > div:first-child {
+  flex: 1 1 280px;
+}
+.drai-head .drai-field {
+  width: min(100%, 280px);
+}
+.drai-theme select.drai-input {
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--drai-rule);
+  border-radius: 0;
+  background: #fff;
+  color: var(--drai-ink);
+  font: 15px var(--drai-font-sans);
+}
+.drai-theme select.drai-input:focus {
+  border-color: var(--drai-focus);
+  outline: 2px solid var(--drai-focus);
+  outline-offset: 0;
+}

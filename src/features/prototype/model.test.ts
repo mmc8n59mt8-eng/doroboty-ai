@@ -35,17 +35,30 @@ describe("coherent browser scenario", () => {
     expect(() => transition(submitted(), { ...input, consent: true }, time)).toThrow("już wysłana");
     expect(s.applications).toHaveLength(initialState().applications.length);
   });
-  it("seeds eight carded applications for one employer offer without picker personas", () => {
+  it("seeds carded applications for a Lead and an Apply offer without picker personas", () => {
     const s = initialState();
     const job = s.jobs[0];
     const carded = s.applications.filter((a) => a.jobId === job.id && a.contribution);
     expect(carded).toHaveLength(8);
+    const apply = s.jobs.find((j) => j.title === "AI Operations Specialist")!;
+    expect(apply.category).toBe("apply");
+    const applyCarded = s.applications.filter((a) => a.jobId === apply.id && a.contribution);
+    expect(applyCarded).toHaveLength(6);
+    // Mixed cases: ownership does not map one-to-one onto Match Score.
+    const all = [...carded, ...applyCarded];
+    const ownMax = Math.max(
+      ...all.filter((a) => a.contribution!.ownership === "own").map((a) => a.score),
+    );
+    const supportMin = Math.min(
+      ...all.filter((a) => a.contribution!.ownership === "support").map((a) => a.score),
+    );
+    expect(ownMax).toBeGreaterThan(supportMin);
     expect(new Set(carded.map((a) => a.contribution!.ownership))).toEqual(
       new Set(["own", "support"]),
     );
     expect(s.applications.filter((a) => a.candidateId === "candidate-anna")).toHaveLength(0);
     const hidden = s.people.filter((p) => p.selectable === false);
-    expect(hidden).toHaveLength(7);
+    expect(hidden).toHaveLength(13);
     expect(hidden.every((p) => p.role === "candidate")).toBe(true);
   });
   it("accepts stored state from before the card", () => {

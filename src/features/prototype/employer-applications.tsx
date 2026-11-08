@@ -35,10 +35,15 @@ export function EmployerApplications({
 }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
-  const searched = applications.filter((a) =>
-    `${a.candidateName} ${a.jobTitle}`
-      .toLocaleLowerCase("pl")
-      .includes(query.toLocaleLowerCase("pl")),
+  const [jobId, setJobId] = useState("all");
+  const jobs = [...new Map(applications.map((a) => [a.jobId, a.jobTitle])).entries()];
+  const offer = jobs.find(([id]) => id === jobId);
+  const searched = applications.filter(
+    (a) =>
+      (jobId === "all" || a.jobId === jobId) &&
+      `${a.candidateName} ${a.jobTitle}`
+        .toLocaleLowerCase("pl")
+        .includes(query.toLocaleLowerCase("pl")),
   );
   const count = (f: Filter) =>
     f === "all"
@@ -46,7 +51,6 @@ export function EmployerApplications({
       : searched.filter((a) => filterStages[f].includes(a.stage)).length;
   const visible =
     filter === "all" ? searched : searched.filter((a) => filterStages[filter].includes(a.stage));
-  const jobs = [...new Set(applications.map((a) => a.jobTitle))];
 
   return (
     <div className="drai-theme drai-page">
@@ -55,17 +59,28 @@ export function EmployerApplications({
           <header className="drai-head">
             <div>
               <p className="drai-mono" style={{ margin: "0 0 8px" }}>
-                Firma / <b>{companyName}</b>
-                {jobs.length === 1 && (
-                  <>
-                    {" "}
-                    · ogłoszenie / <b>{jobs[0]}</b>
-                  </>
-                )}
+                Firma / <b>{companyName}</b> · ogłoszenie /{" "}
+                <b>{offer ? offer[1] : `wszystkie [${jobs.length}]`}</b>
               </p>
               <h1 className="drai-h1">
-                Kandydaci <span className="drai-mono">[{applications.length}]</span>
+                Kandydaci <span className="drai-mono">[{searched.length}]</span>
               </h1>
+            </div>
+            <div className="drai-field">
+              <label htmlFor="candidate-offer">Ogłoszenie</label>
+              <select
+                id="candidate-offer"
+                className="drai-input"
+                value={jobId}
+                onChange={(e) => setJobId(e.target.value)}
+              >
+                <option value="all">Wszystkie ogłoszenia [{applications.length}]</option>
+                {jobs.map(([id, title]) => (
+                  <option key={id} value={id}>
+                    {title} [{applications.filter((a) => a.jobId === id).length}]
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="drai-field">
               <label htmlFor="candidate-search">Szukaj kandydata lub oferty</label>

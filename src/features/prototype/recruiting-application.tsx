@@ -1,8 +1,14 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ApplicationRecord } from "./application-record";
-import { nextStages, stageLabels, type Application } from "./model";
+import { nextStages, stageLabels, type Application, type Stage } from "./model";
+
+/** Employer action wording; history keeps the stage names. */
+const actionLabels: Partial<Record<Stage, string>> = {
+  interview_invited: "Zaproś na rozmowę",
+  rejected: "Odrzuć",
+};
 import { usePrototype } from "./store";
 
 export function RecruitingApplication({ application }: { application: Application }) {
@@ -13,6 +19,14 @@ export function RecruitingApplication({ application }: { application: Applicatio
   const pendingFocus = useRef(false);
   const company = state.companies.find((item) => item.id === application.companyId);
   const availableStages = nextStages[application.stage];
+
+  // Opening a new application counts as reviewing it ("Przejrzane"), so inviting is one action.
+  const autoReviewed = useRef(false);
+  useEffect(() => {
+    if (application.stage !== "submitted" || autoReviewed.current) return;
+    autoReviewed.current = true;
+    run({ type: "stage", applicationId: application.id, stage: "reviewed", note: "" });
+  }, [application.id, application.stage, run]);
 
   useLayoutEffect(() => {
     if (pendingFocus.current) {
@@ -49,7 +63,7 @@ export function RecruitingApplication({ application }: { application: Applicatio
                           }
                         }}
                       >
-                        {stageLabels[stage]}
+                        {actionLabels[stage] ?? stageLabels[stage]}
                       </Button>
                     ))}
                   </div>

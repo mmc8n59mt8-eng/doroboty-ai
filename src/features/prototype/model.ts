@@ -278,12 +278,13 @@ export function initialState(): State {
   });
   for (const candidate of contributionScenario.candidates) {
     const person = state.people.find((x) => x.id === candidate.id)!;
+    const offer = state.jobs.find((x) => x.id === candidate.jobId) ?? job;
     state.applications.push({
       id: `application-card-${candidate.id.replace("candidate-scenario-", "")}`,
       candidateId: person.id,
-      jobId: job.id,
-      companyId: job.companyId,
-      jobTitle: job.title,
+      jobId: offer.id,
+      companyId: offer.companyId,
+      jobTitle: offer.title,
       candidateName: person.name,
       cv: person.cv,
       answer: candidate.answer,

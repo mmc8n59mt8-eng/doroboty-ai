@@ -27,7 +27,8 @@
         "outcome": "Pilotaż oceniono pozytywnie. Dalsze decyzje podejmował dyrektor produktu.",
         "ownership": "support",
         "interviewQuestion": "Które decyzje w pilotażu podjęłaś sama, a które przygotował ktoś inny?"
-      }
+      },
+      "jobId": "20000000-0000-4000-8000-000000000001"
     },
     {
       "id": "candidate-scenario-piotr",
@@ -46,7 +47,8 @@
         "outcome": "Projekt zakończył się sukcesem i zwiększył satysfakcję klientów.",
         "ownership": "support",
         "interviewQuestion": "Co konkretnie zmieniło się w chatbocie dzięki Twojej pracy i jak to zmierzono?"
-      }
+      },
+      "jobId": "20000000-0000-4000-8000-000000000001"
     },
     {
       "id": "candidate-scenario-ewa",
@@ -55,7 +57,7 @@
       "bio": "Kandydatka w scenariuszu karty własnego wkładu.",
       "location": "Gdańsk",
       "cv": "Ewa Dąbrowska. Customer Operations Lead w firmie ubezpieczeniowej (2020–2026). Proces oceny jakości asystenta AI w obsłudze reklamacji, współpraca z działem prawnym, zespół 18 konsultantów.",
-      "exampleScore": 64,
+      "exampleScore": 83,
       "exampleSummary": "Doświadczenie w obsłudze klienta i kontroli jakości odpowiedzi AI.",
       "answer": "Jestem specjalistką z pasją do sztucznej inteligencji i usprawniania procesów. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałam z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonana, że dobrze odnajdę się w tej roli.",
       "submittedAt": "2026-11-03T08:05:00.000Z",
@@ -65,7 +67,8 @@
         "outcome": "Odsetek odpowiedzi wymagających poprawki spadł z 22% do 9% w 4 miesiące. Raz zatrzymałam wydanie, bo nowa wersja myliła terminy reklamacji.",
         "ownership": "own",
         "interviewQuestion": "Jak wybrałaś 200 przypadków testowych i co zrobiłaś, gdy zespół chciał wydać wersję mimo błędu?"
-      }
+      },
+      "jobId": "20000000-0000-4000-8000-000000000001"
     },
     {
       "id": "candidate-scenario-kacper",
@@ -74,7 +77,7 @@
       "bio": "Kandydat w scenariuszu karty własnego wkładu.",
       "location": "Wrocław",
       "cv": "Kacper Mazur. Data Analyst w serwisie z treściami (2022–2026). Wsparcie zespołu data science przy projekcie rekomendacji, dashboardy, raporty.",
-      "exampleScore": 85,
+      "exampleScore": 67,
       "exampleSummary": "Doświadczenie w analizie danych i projektach personalizacji.",
       "answer": "Jestem doświadczonym specjalistą z pasją do sztucznej inteligencji i analizy danych. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałem z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonany, że dobrze odnajdę się w tej roli.",
       "submittedAt": "2026-11-03T11:30:00.000Z",
@@ -84,7 +87,8 @@
         "outcome": "Rekomendacje zostały wdrożone na stronie.",
         "ownership": "support",
         "interviewQuestion": "Jakie decyzje zapadły na podstawie Twoich dashboardów i kto je podjął?"
-      }
+      },
+      "jobId": "20000000-0000-4000-8000-000000000001"
     },
     {
       "id": "candidate-scenario-natalia",
@@ -103,7 +107,8 @@
         "outcome": "Handlowcy oszczędzają około 20 minut dziennie na notatkach (ankieta i logi CRM). Streszczenia rozmów po angielsku były słabe, więc wyłączyłam je dla tego rynku.",
         "ownership": "own",
         "interviewQuestion": "Jak sprawdziłaś te 20 minut i dlaczego wyłączyłaś rynek anglojęzyczny zamiast poprawiać narzędzie?"
-      }
+      },
+      "jobId": "20000000-0000-4000-8000-000000000001"
     },
     {
       "id": "candidate-scenario-bartosz",
@@ -122,7 +127,8 @@
         "outcome": "Transformacja przyniosła wymierne korzyści biznesowe.",
         "ownership": "support",
         "interviewQuestion": "Wybierz jedną inicjatywę: co w niej zrobiłeś sam i jaki był jej mierzalny wynik?"
-      }
+      },
+      "jobId": "20000000-0000-4000-8000-000000000001"
     },
     {
       "id": "candidate-scenario-julia",
@@ -141,6 +147,127 @@
         "outcome": "Czas odpowiedzi kandydatom spadł z 6 do 2 dni. Sortowanie CV wyłączyłam po 2 miesiącach, bo odrzucało osoby z przerwą w karierze. Zostały tylko szkice odpowiedzi.",
         "ownership": "own",
         "interviewQuestion": "Jak zauważyłaś problem z odrzucaniem kandydatów i co zmieniłaś w procesie po wyłączeniu sortowania?"
+      },
+      "jobId": "20000000-0000-4000-8000-000000000001"
+    },
+    {
+      "id": "candidate-scenario-agata",
+      "name": "Agata Wójcik",
+      "headline": "Operations Specialist · automatyzacje",
+      "bio": "Osoba w scenariuszu karty własnego wkładu.",
+      "location": "Katowice",
+      "cv": "Agata Wójcik. Operations Specialist w firmie logistycznej (2021–2026). Automatyzacja raportów i obiegu dokumentów z użyciem narzędzi AI.",
+      "exampleScore": 87,
+      "exampleSummary": "Doświadczenie w automatyzacji operacji i raportowania.",
+      "answer": "Jestem specjalistką z pasją do sztucznej inteligencji i usprawniania procesów. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałam z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonana, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-05T09:10:00.000Z",
+      "jobId": "20000000-0000-4000-8000-000000000004",
+      "card": {
+        "ownWork": "Sama przygotowałam automatyzację tygodniowego raportu operacyjnego z pomocą narzędzia AI: zebrałam źródła danych i ułożyłam szablon raportu.",
+        "usage": "Raport trafił do kilku osób z zarządu, ale jeszcze się nie przyjął.",
+        "outcome": "Na razie trudno ocenić efekt. Raport powstaje szybciej, ale nie mierzyłam, ile czasu oszczędza.",
+        "ownership": "own",
+        "interviewQuestion": "Kto i jak korzysta z raportu dzisiaj i co musiałoby się stać, żeby się przyjął?"
+      }
+    },
+    {
+      "id": "candidate-scenario-michal",
+      "name": "Michał Lewandowski",
+      "headline": "Customer Support Analyst",
+      "bio": "Osoba w scenariuszu karty własnego wkładu.",
+      "location": "Lublin",
+      "cv": "Michał Lewandowski. Customer Support Analyst (2022–2026). Analiza zgłoszeń i zestawy testowe dla asystenta AI w obsłudze klienta.",
+      "exampleScore": 61,
+      "exampleSummary": "Doświadczenie w analizie zgłoszeń i jakości obsługi.",
+      "answer": "Jestem doświadczonym specjalistą z pasją do sztucznej inteligencji i usprawniania procesów. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałem z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonany, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-05T13:30:00.000Z",
+      "jobId": "20000000-0000-4000-8000-000000000004",
+      "card": {
+        "ownWork": "Pracowałem w zespole wdrażającym asystenta AI w obsłudze klienta. Moją częścią było przygotowanie 150 przypadków testowych z prawdziwych zgłoszeń i cotygodniowe raporty błędów. Decyzje o zmianach podejmowała liderka zespołu.",
+        "usage": "Od lutego 2026 z raportów korzysta zespół 12 konsultantów i liderka przy każdej zmianie asystenta.",
+        "outcome": "Liczba błędnych odpowiedzi w kategorii zwrotów spadła z 18% do 7% w 3 miesiące, po zmianach przygotowanych na podstawie moich raportów.",
+        "ownership": "support",
+        "interviewQuestion": "Które zmiany w asystencie wynikały bezpośrednio z Twoich raportów i jak to sprawdzono?"
+      }
+    },
+    {
+      "id": "candidate-scenario-ola",
+      "name": "Aleksandra Kamińska",
+      "headline": "Back Office Lead · procesy z AI",
+      "bio": "Osoba w scenariuszu karty własnego wkładu.",
+      "location": "Wrocław",
+      "cv": "Aleksandra Kamińska. Back Office Lead w firmie leasingowej (2020–2026). Wdrożenie klasyfikacji dokumentów z AI, zespół 9 osób.",
+      "exampleScore": 69,
+      "exampleSummary": "Doświadczenie w procesach back office i wdrażaniu AI.",
+      "answer": "Jestem specjalistką z pasją do sztucznej inteligencji i usprawniania procesów. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałam z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonana, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-06T08:40:00.000Z",
+      "jobId": "20000000-0000-4000-8000-000000000004",
+      "card": {
+        "ownWork": "Sama zaprojektowałam i wdrożyłam klasyfikację przychodzących dokumentów z AI w back office: reguły, próg pewności i ręczną weryfikację niepewnych przypadków. Integrację zrobił dostawca.",
+        "usage": "Od października 2025 korzysta z tego 9 osób, około 2 000 dokumentów tygodniowo.",
+        "outcome": "Czas przypisania dokumentu spadł z 2 dni do 4 godzin. Przez pierwszy miesiąc 12% dokumentów wymagało poprawki, więc podniosłam próg pewności.",
+        "ownership": "own",
+        "interviewQuestion": "Dlaczego wybrałaś taki próg pewności i co się stało z dokumentami poniżej niego?"
+      }
+    },
+    {
+      "id": "candidate-scenario-pawel",
+      "name": "Paweł Zając",
+      "headline": "Process Improvement Specialist",
+      "bio": "Osoba w scenariuszu karty własnego wkładu.",
+      "location": "Warszawa",
+      "cv": "Paweł Zając. Process Improvement Specialist (2019–2026). Udział w projektach automatyzacji i warsztatach z AI.",
+      "exampleScore": 90,
+      "exampleSummary": "Doświadczenie w usprawnianiu procesów i projektach automatyzacji.",
+      "answer": "Jestem doświadczonym specjalistą z pasją do sztucznej inteligencji i usprawniania procesów. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałem z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonany, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-06T11:15:00.000Z",
+      "jobId": "20000000-0000-4000-8000-000000000004",
+      "card": {
+        "ownWork": "Uczestniczyłem w projektach automatyzacji procesów z wykorzystaniem AI, wspierając zespoły w identyfikacji obszarów do usprawnień.",
+        "usage": "Rozwiązania były używane w kilku działach firmy.",
+        "outcome": "Projekty przyniosły oszczędność czasu i wyższą efektywność.",
+        "ownership": "support",
+        "interviewQuestion": "Wybierz jeden proces: co w nim zmieniłeś sam i ile czasu to oszczędziło?"
+      }
+    },
+    {
+      "id": "candidate-scenario-ida",
+      "name": "Ida Pawlak",
+      "headline": "Finance Operations · AI w księgowości",
+      "bio": "Osoba w scenariuszu karty własnego wkładu.",
+      "location": "Gdynia",
+      "cv": "Ida Pawlak. Finance Operations Specialist (2021–2026). Dopasowywanie płatności z pomocą AI, zespół księgowości 6 osób.",
+      "exampleScore": 77,
+      "exampleSummary": "Doświadczenie w operacjach finansowych i automatyzacji.",
+      "answer": "Jestem specjalistką z pasją do sztucznej inteligencji i usprawniania procesów. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałam z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonana, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-06T15:05:00.000Z",
+      "jobId": "20000000-0000-4000-8000-000000000004",
+      "card": {
+        "ownWork": "Sama zbudowałam proces dopasowywania płatności do faktur z pomocą modelu AI i arkusza kontrolnego. Ustaliłam z księgowością, które przypadki zawsze sprawdzamy ręcznie.",
+        "usage": "Od marca 2026 korzysta z tego 6 osób z księgowości przy zamknięciu każdego miesiąca.",
+        "outcome": "Zamknięcie miesiąca skróciło się z 5 do 3 dni. Model mylił płatności zbiorcze, więc te zawsze idą do ręcznej weryfikacji.",
+        "ownership": "own",
+        "interviewQuestion": "Jak wyglądało pierwsze zamknięcie miesiąca z tym procesem i co poszło nie tak?"
+      }
+    },
+    {
+      "id": "candidate-scenario-kamil",
+      "name": "Kamil Dudek",
+      "headline": "Operations Coordinator",
+      "bio": "Osoba w scenariuszu karty własnego wkładu.",
+      "location": "Poznań",
+      "cv": "Kamil Dudek. Operations Coordinator (2022–2026). Koordynacja zespołu operacyjnego, wsparcie wdrożenia narzędzi AI.",
+      "exampleScore": 72,
+      "exampleSummary": "Doświadczenie w koordynacji operacji.",
+      "answer": "Jestem doświadczonym specjalistą z pasją do sztucznej inteligencji i usprawniania procesów. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałem z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonany, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-07T10:20:00.000Z",
+      "jobId": "20000000-0000-4000-8000-000000000004",
+      "card": {
+        "ownWork": "Wspierałem wdrożenie narzędzia AI do planowania zmian w zespole operacyjnym, koordynując komunikację między działami.",
+        "usage": "Narzędzie było używane przez zespół operacyjny.",
+        "outcome": "Wdrożenie przebiegło sprawnie.",
+        "ownership": "support",
+        "interviewQuestion": "Co konkretnie zrobiłeś przy wdrożeniu i po czym poznałeś, że przebiegło sprawnie?"
       }
     }
   ]
