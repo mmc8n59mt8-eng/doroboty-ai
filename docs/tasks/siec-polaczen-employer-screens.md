@@ -21,7 +21,7 @@ At the product owner's request, apply the DoRoboty.ai design system "Sieć poł�
 ## Decisions and deviations
 
 - **Muted text darkened from #7e7684 to #736b79.** axe found 4.27:1 on the frame surface (AA needs 4.5:1). New value: 4.63:1 on paper, 4.80:1 on the score panel, 5.01:1 on frame. This closes the skill's open WCAG item for muted text on these surfaces.
-- **Fonts are not bundled.** Archivo, Instrument Serif and JetBrains Mono are referenced but no font files are shipped (the project forbids remote font endpoints). Screens currently render in the fallbacks Helvetica Neue / Georgia / Menlo. Bundling the OFL fonts locally is a follow-up needing approval to download them.
+- **Fonts are bundled locally.** Archivo (variable wght/wdth), Instrument Serif Italic and JetBrains Mono (variable wght), Fontsource 5.3.0 builds, latin + latin-ext subsets (Polish diacritics), SIL OFL licenses beside the files in `src/app/fonts/siec-polaczen/`. Copied from the npm tarballs with the product owner's approval; not added as dependencies; no remote font requests.
 - The italic voice layer is not used: these are working screens, and the candidate's card answers are shown as body text inside cards.
 
 ## Validation
@@ -29,4 +29,5 @@ At the product owner's request, apply the DoRoboty.ai design system "Sieć poł�
 - `./scripts/verify` passed (exit 0, Node 24.22.2, Playwright Chromium 153): format, design-system kit check, lint, types, 29 unit tests, packet, build, 34/34 browser journeys including axe on the employer detail.
 - One journey updated: the employer detail no longer has the header `.record-meta` score pill; it asserts `Match Score / 72 / 100` and its description instead.
 - Manual browser checks as Karolina Wiśniewska: list and detail at 1280px; computed styles (mono 11.5px uppercase, H1 sans 40px, controls 0 radius, cards 12px); no horizontal overflow at 390px and 320px on list and detail.
-- Not verified: rendering with the real fonts; visual comparison against the skill's P-series renders by a human.
+- Fonts: in the dev server Archivo and JetBrains Mono load from local files (both subsets) with no external requests; Instrument Serif is defined but not requested because these working screens use no italic voice. The build emits all six font files. `./scripts/verify` re-run after bundling: exit 0, 34/34 journeys.
+- Not verified: visual comparison against the skill's P-series renders by a human.

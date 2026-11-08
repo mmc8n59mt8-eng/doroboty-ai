@@ -22,3 +22,15 @@ while discarding unused stylistic/italic interpolation. The original is retained
 Generate with FontTools `varLib.instancer` using those axis values and WOFF2 output;
 preserve timestamps for repeatability. FontTools is asset tooling, not a runtime dependency.
 These retained Timeless assets are no longer loaded by the application.
+
+## "Sieć połączeń" fonts (employer candidate screens)
+
+`siec-polaczen/` holds the three typefaces of the DoRoboty.ai design system "Sieć połączeń", loaded only by `src/app/siec-polaczen.css` under `.drai-theme`:
+
+| File                                            | Family                                       | Role                 | Source                                                 |
+| ----------------------------------------------- | -------------------------------------------- | -------------------- | ------------------------------------------------------ |
+| `archivo-latin(-ext)-wdth-normal.woff2`         | Archivo, variable wght 100–900, wdth 62–125% | headings and UI      | Fontsource `@fontsource-variable/archivo` 5.3.0        |
+| `instrument-serif-latin(-ext)-400-italic.woff2` | Instrument Serif Italic 400                  | human voice (quotes) | Fontsource `@fontsource/instrument-serif` 5.3.0        |
+| `jetbrains-mono-latin(-ext)-wght-normal.woff2`  | JetBrains Mono, variable wght 100–800        | platform facts       | Fontsource `@fontsource-variable/jetbrains-mono` 5.3.0 |
+
+All three are SIL Open Font License 1.1; the licenses are kept beside the files (`LICENSE-*.txt`). Only the latin and latin-ext subsets are included, which cover Polish diacritics. The files were copied from the npm package tarballs; the packages are not project dependencies and there are no remote font requests.
