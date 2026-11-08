@@ -483,8 +483,7 @@
   gap: 0;
   padding: 0;
 }
-.drai-theme .recruiting-layout > .record-sheet,
-.drai-theme .record-sheet {
+.drai-theme .recruiting-layout > .record-sheet {
   padding: 22px 28px 28px;
   border: 0;
   border-left: 1px solid var(--drai-rule);
@@ -600,8 +599,7 @@
 
 /* --- responsive --- */
 @media (max-width: 950px) {
-  .drai-theme .recruiting-layout > .record-sheet,
-  .drai-theme .record-sheet {
+  .drai-theme .recruiting-layout > .record-sheet {
     border-left: 0;
     border-bottom: 1px solid var(--drai-rule);
   }
@@ -628,8 +626,7 @@
   .drai-app__status {
     grid-column: 2;
   }
-  .drai-theme .recruiting-layout > .record-sheet,
-  .drai-theme .record-sheet {
+  .drai-theme .recruiting-layout > .record-sheet {
     padding: 18px;
   }
   .drai-theme .record-tabs .record-tab {

@@ -1,0 +1,533 @@
+/*
+ * "Sieć połączeń" across the whole prototype.
+ * 1. Remaps the Poster People host tokens (--gui-*, --pp-*, shadcn bridge) to the
+ *    DesignSystemDoRobotyAI values, so every recipe and Base UI primitive follows.
+ * 2. Overrides the recipes that hard-code Poster People geometry (24px cards, ink contours,
+ *    pink pills, Geist Serif headings).
+ * Loaded last. Component classes (.drai-*) live in siec-polaczen.css.
+ */
+:root {
+  /* type: Archivo for fact/UI, Instrument Serif for voice, JetBrains Mono for evidence */
+  --gui-font-brand: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --gui-font-ui: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --gui-font-editorial: "Instrument Serif", Georgia, serif;
+  --gui-font-data: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --pp-font-heading: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --pp-font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+
+  /* square construction; only content cards are rounded (explicitly, 12px) */
+  --gui-radius-xs: 0;
+  --gui-radius-s: 0;
+  --gui-radius-m: 0;
+  --gui-radius-l: 0;
+  --gui-radius-xl: 0;
+  --gui-radius-full: 0;
+  --radius: 0;
+  --pp-radius: 0;
+  --pp-radius-small: 0;
+  --pp-radius-large: 0;
+
+  /* paper, frame, ink, rule, one brick accent */
+  --gui-canvas: #f7f3ef;
+  --gui-neutral-2: #fffcfb;
+  --gui-neutral-3: #f7f3ef;
+  --gui-neutral-4: #e7e1e3;
+  --gui-neutral-8: #736b79;
+  --gui-neutral-9: #3a3340;
+  --gui-neutral-10: #17161d;
+  --gui-color-1: #f3dcd4;
+  --gui-color-1-transparent: #fbf7f4;
+  --gui-color-2: #17161d;
+  --gui-color-3: #e7e1e3;
+  --gui-color-4: #f3dcd4;
+  --gui-success: #3f6b4f;
+  --gui-error: #a3271f;
+  --gui-text-muted: #736b79;
+  --gui-edge: #e7e1e3;
+  --gui-focus: #17161d;
+  --gui-link: #17161d;
+  --gui-control-hover: #fbf7f4;
+  --gui-edge-shadow: inset 0 0 0 1px #e7e1e3;
+  --gui-control-shadow: inset 0 0 0 1px #e7e1e3;
+  --gui-shadow-m: inset 0 0 0 1px #e7e1e3;
+  --gui-accent-bar-shadow: inset 2px 0 #b5533c;
+
+  --pp-paper: #f7f3ef;
+  --pp-surface: #fffcfb;
+  --pp-ink: #17161d;
+  --pp-muted: #736b79;
+  --pp-line: #e7e1e3;
+  --pp-action: #f3dcd4;
+  --pp-action-hover: #efcfc4;
+  --pp-fact: #fbf7f4;
+  --pp-yellow: #e7e1e3;
+  --pp-surface-hover: #fbf7f4;
+
+  --background: #f7f3ef;
+  --foreground: #17161d;
+  --card: #fffcfb;
+  --popover: #fffcfb;
+  --primary: #f3dcd4;
+  --primary-foreground: #17161d;
+  --muted-foreground: #736b79;
+  --border: #e7e1e3;
+  --sidebar: #fffcfb;
+}
+
+/* --- page canvas: paper with the 32px construction grid --- */
+body {
+  background-color: #f7f3ef;
+  background-image:
+    linear-gradient(#e7e1e38c 1px, transparent 1px),
+    linear-gradient(90deg, #e7e1e38c 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: #3a3340;
+  font-family: var(--drai-font-sans);
+}
+
+/* --- headings: wide heavy sans; italics only through .drai-voice --- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[data-slot="dialog-title"],
+[data-slot="alert-dialog-title"] {
+  color: #17161d;
+  font-family: var(--drai-font-sans);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.025em;
+}
+h1,
+.page-heading h1 {
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.1;
+}
+h2 {
+  font-size: clamp(22px, 2.6vw, 28px);
+  line-height: 1.15;
+}
+h3 {
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #17161d;
+  outline-offset: 2px;
+}
+
+/* --- brand: wordmark only, the logo is not an accent slot --- */
+.brand,
+header a[aria-label="DoRoboty.ai — strona główna"] {
+  font-family: var(--drai-font-sans);
+  font-weight: 800;
+  font-stretch: 120%;
+  letter-spacing: -0.03em;
+  color: #17161d;
+}
+.brand-mark {
+  border: 1px solid #17161d;
+  border-radius: 0;
+  background: #fffcfb;
+  color: #17161d;
+}
+
+/* --- shell: framed header/sidebar on paper --- */
+header:has([aria-label="Główna nawigacja"]),
+footer,
+.sidebar,
+.topbar,
+.mobile-header {
+  background: #fffcfb;
+}
+header:has([aria-label="Główna nawigacja"]) {
+  box-shadow: inset 0 -1px #e7e1e3;
+}
+footer {
+  box-shadow: inset 0 1px #e7e1e3;
+}
+.sidebar {
+  box-shadow: inset -1px 0 #e7e1e3;
+}
+.topbar {
+  box-shadow: inset 0 -1px #e7e1e3;
+}
+.nav-link {
+  border-radius: 0;
+  color: #3a3340;
+}
+.nav-active,
+.nav-active:hover {
+  background: #17161d;
+  color: #fffcfb;
+}
+.workspace-label {
+  box-shadow:
+    inset 0 1px #e7e1e3,
+    inset 0 -1px #e7e1e3;
+}
+.workspace-avatar {
+  border: 1px solid #17161d;
+  border-radius: 0;
+  background: #fffcfb;
+  box-shadow: none;
+  font-family: var(--drai-font-mono);
+}
+.workspace-label div > span {
+  color: #736b79;
+}
+
+/* --- frames: panels, forms, notices, sheets --- */
+.prototype-panel,
+.prototype-form,
+.metric-card,
+.visitors-card,
+.success-panel,
+.record-sheet {
+  border: 1px solid #e7e1e3;
+  border-radius: 0;
+  background: #fffcfb;
+  box-shadow: none;
+}
+.prototype-panel .prototype-form {
+  border: 0;
+}
+.prototype-notice {
+  border: 1px solid #e7e1e3;
+  border-left: 2px solid #17161d;
+  border-radius: 0;
+  background: #fffcfb;
+  color: #17161d;
+}
+.prototype-error,
+.error-message {
+  border-color: #a3271f;
+  border-radius: 0;
+  color: #a3271f;
+}
+.page-heading {
+  border-bottom: 1px solid #e7e1e3;
+}
+
+/* --- primary action: accent tint, brick border, square corner marks --- */
+.btn-primary {
+  position: relative;
+  box-shadow: inset 0 0 0 1px #b5533c;
+  --control-hover-bg: #efcfc4;
+}
+.btn-primary::before,
+.btn-primary::after {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 1px solid #b5533c;
+  background: #fffcfb;
+  content: "";
+  pointer-events: none;
+}
+.btn-primary::before {
+  top: -4px;
+  left: -4px;
+}
+.btn-primary::after {
+  right: -4px;
+  bottom: -4px;
+}
+[data-slot="button"],
+.pp-detail-button,
+.pp-search-submit,
+.pp-filter-button {
+  border-radius: 0;
+  font-family: var(--drai-font-sans);
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+/* --- mono evidence layer for platform facts --- */
+.match-score,
+.match-score[data-score-band] {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: #17161d;
+  font-family: var(--drai-font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.record-stage {
+  border-radius: 0;
+}
+.pp-job-topline,
+.pp-job-facts,
+.pp-job-age,
+.pp-offer-eyebrow,
+.pp-offer-date,
+.pp-category-count,
+.pp-page-summary,
+.application-eyebrow,
+.process-timeline time {
+  font-family: var(--drai-font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --- job rows instead of rounded cards (lists before cards) --- */
+.pp-job-list {
+  gap: 0;
+  border: 1px solid #e7e1e3;
+  background: #fffcfb;
+}
+.pp-job-card {
+  border: 0;
+  border-bottom: 1px solid #e7e1e3;
+  border-radius: 0;
+  background: transparent;
+}
+.pp-job-card:last-child {
+  border-bottom: 0;
+}
+.pp-job-card:hover {
+  background: #fbf7f4;
+}
+.pp-job-title,
+.pp-job-title a {
+  color: #17161d;
+  font-family: var(--drai-font-sans);
+  font-weight: 600;
+  font-stretch: 100%;
+  letter-spacing: -0.01em;
+}
+.pp-job-tags span,
+.pp-offer-skill-row span,
+.pp-filter-chip {
+  border: 1px solid #e7e1e3;
+  border-radius: 0;
+  background: #fffcfb;
+}
+.pp-salary-tag {
+  border: 1px solid #e7e1e3;
+  border-radius: 0;
+  background: #fffcfb;
+  color: #17161d;
+  font-family: var(--drai-font-sans);
+  font-weight: 700;
+}
+.pp-detail-button {
+  border: 1px solid #e7e1e3;
+  background: #fffcfb;
+}
+
+/* --- illustrations belong to Poster People; working screens use no graphic --- */
+.pp-people-art {
+  display: none;
+}
+
+/* --- dialogs and popups --- */
+[data-slot="dialog-content"],
+[data-slot="alert-dialog-content"],
+.pp-dialog {
+  border: 1px solid #e7e1e3;
+  border-radius: 0;
+  background: #fffcfb;
+}
+
+/* --- home: entry composition with the network graphic --- */
+.home-intro {
+  background: transparent;
+  box-shadow: inset 0 -1px #e7e1e3;
+}
+.home-intro .drai-net {
+  width: 100%;
+  max-width: 440px;
+  justify-self: center;
+}
+.home-intro h1 {
+  font-size: clamp(36px, 5vw, 64px);
+  font-stretch: 115%;
+  line-height: 1.02;
+}
+.home-intro h1 .drai-voice {
+  display: block;
+  font-family: var(--drai-font-voice);
+  font-size: 1.1em;
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: normal;
+  letter-spacing: -0.01em;
+}
+@media (max-width: 1023px) {
+  .home-intro .drai-net {
+    max-width: 360px;
+    max-height: 220px;
+  }
+}
+
+/* --- thin rule lines instead of Poster People ink contours --- */
+.pp-search-form,
+.pp-category-tab,
+.pp-filter-panel,
+.pp-filter-heading,
+.pp-job-side,
+.pp-page-button,
+.pp-empty-state,
+.pp-empty-mark,
+.pp-dialog-heading,
+.pp-filter-dialog-footer,
+.pp-intro-section,
+.pp-results-title > span,
+.pp-offer-hero,
+.pp-offer-category,
+.pp-offer-action-card,
+.pp-offer-pay,
+.pp-offer-description,
+.pp-offer-section-nav,
+.pp-offer-employer,
+.pp-filter-button,
+.pp-job-card > [data-company-logo],
+.pp-offer-identity > [data-company-logo],
+.pp-offer-employer [data-company-logo],
+.native-select {
+  border-color: #e7e1e3;
+  border-radius: 0;
+}
+.pp-search-form,
+.pp-filter-panel,
+.pp-offer-action-card,
+.pp-offer-description,
+.pp-offer-employer,
+.pp-empty-state {
+  background: #fffcfb;
+}
+.pp-intro-section {
+  background: transparent;
+}
+.pp-search-submit {
+  position: relative;
+  border-color: #b5533c;
+  border-radius: 0;
+  background: #f3dcd4;
+}
+
+/* listing entry: two-face headline, no Poster People highlighter bar */
+.pp-intro-copy h1,
+.pp-offer-hero h1,
+.pp-results-title h2,
+.pp-filter-heading h2,
+.pp-offer-section [data-job-description] h3 {
+  font-family: var(--drai-font-sans);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.025em;
+}
+.pp-intro-copy h1 {
+  font-size: clamp(34px, 4.6vw, 60px);
+  font-stretch: 115%;
+  line-height: 1.04;
+}
+.pp-intro-copy h1 span::before {
+  display: none;
+}
+.pp-intro-copy h1 .drai-voice {
+  display: block;
+  font-family: var(--drai-font-voice);
+  font-size: 1.1em;
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: normal;
+  letter-spacing: -0.01em;
+}
+.pp-offer-hero h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.08;
+}
+.pp-results-title h2 {
+  font-size: clamp(22px, 2.6vw, 28px);
+}
+.pp-filter-heading h2 {
+  font-size: 20px;
+}
+.pp-offer-section [data-job-description] h3 {
+  font-size: 20px;
+}
+.pp-results-title > span {
+  font-family: var(--drai-font-mono);
+  font-size: 11.5px;
+}
+
+/* application form: working screen, sans H1 at the page scale */
+.application-header h1 {
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+.application-form-intro h2 {
+  font-size: clamp(22px, 2.6vw, 28px);
+}
+
+/* form labels: mono uppercase (platform field names), inputs stay sans */
+.field > span:first-child,
+.prototype-form label > span:first-child {
+  color: #17161d;
+  font-family: var(--drai-font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Archivo sets wider than Arial: keep the public header within tablet widths */
+@media (max-width: 1100px) {
+  nav[aria-label="Główna nawigacja"] {
+    gap: 12px;
+  }
+  nav[aria-label="Główna nawigacja"] a,
+  nav[aria-label="Główna nawigacja"] [data-slot="button"] {
+    font-size: 13px;
+  }
+  nav[aria-label="Główna nawigacja"] > div {
+    gap: 12px;
+  }
+  nav[aria-label="Główna nawigacja"] a[class*="px-[var(--gui-space-l)]"],
+  nav[aria-label="Główna nawigacja"] [data-slot="button"] {
+    min-height: 40px;
+    padding-inline: 12px;
+  }
+}
+@media (max-width: 900px) {
+  nav[aria-label="Główna nawigacja"],
+  nav[aria-label="Główna nawigacja"] > div {
+    gap: 8px;
+  }
+}
+
+/* status is text plus a square marker, never an accent fill */
+.record-meta .record-stage {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #17161d;
+  font-family: var(--drai-font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.record-meta .record-stage::before {
+  width: 7px;
+  height: 7px;
+  border: 1px solid currentColor;
+  background: currentColor;
+  content: "";
+}

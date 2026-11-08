@@ -1,13 +1,11 @@
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { JobCard } from "@/features/jobs/job-card";
 import { usePrototype } from "./store";
 import { publishedJobs } from "./model";
 import { cn } from "@/lib/utils";
-
-import peopleArt from "../../../docs/design-system/agent-kit/assets/people.png";
+import { NetworkGraphic } from "./network-graphic";
 
 const categories = [
   {
@@ -29,24 +27,33 @@ const categories = [
 
 export default function HomePage() {
   const { state } = usePrototype();
-  const latestJobs = publishedJobs(state).slice(0, 4);
+  const jobs = publishedJobs(state);
+  const latestJobs = jobs.slice(0, 4);
+  const count = (slug: string) => jobs.filter((job) => job.category === slug).length;
 
   return (
     <>
-      <section className="home-intro bg-muted/25 shadow-[var(--gui-divider-bottom-shadow)]">
-        <div className="mx-auto grid max-w-[1360px] gap-12 px-5 py-16 lg:grid-cols-[1.3fr_0.7fr] lg:px-8 lg:py-24">
+      <section className="home-intro">
+        <div className="mx-auto grid max-w-[1360px] gap-12 px-5 py-16 lg:grid-cols-[1.25fr_0.75fr] lg:px-8 lg:py-24">
           <div>
-            <Badge variant="secondary" className="px-3 py-1 text-xs">
-              Dobra robota. Z AI w środku.
-            </Badge>
-            <h1 className="mt-6 max-w-4xl text-5xl leading-[var(--gui-leading-xxl)] font-semibold tracking-[var(--gui-tracking-xs)] sm:text-6xl lg:text-7xl">
-              Praca dla ludzi, którzy dowożą z AI.
+            <p className="drai-mono drai-facts" style={{ margin: 0 }}>
+              <span>
+                Portal pracy z AI · oferty <b>[{jobs.length}]</b>
+              </span>
+              {categories.map((category) => (
+                <span key={category.slug}>
+                  {category.label} <b>[{count(category.slug)}]</b>
+                </span>
+              ))}
+            </p>
+            <h1 className="mt-6 max-w-4xl">
+              <span className="drai-voice">Praca dla ludzi,</span> którzy dowożą z AI.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed">
               Wyselekcjonowane role, w których AI jest częścią odpowiedzialności, decyzji i wyniku
               pracy — nie dopiskiem w employer brandingu.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-4">
               <Link to="/oferty" className={buttonVariants({ size: "lg" })}>
                 Zobacz oferty <ArrowRight />
               </Link>
@@ -57,23 +64,26 @@ export default function HomePage() {
                 Jak wybieramy role
               </Link>
             </div>
+            <p className="drai-mono" style={{ margin: "24px 0 0" }}>
+              Jak to działa / <b>kandydat → własny wkład → rozmowa → firma</b>
+            </p>
           </div>
-          <img className="people-art" src={peopleArt} alt="Dwie osoby pracujące razem z laptopem" />
+          <NetworkGraphic />
         </div>
       </section>
 
       <section className="mx-auto max-w-[1360px] px-5 py-16 lg:px-8 lg:py-20">
-        <p className="text-xs font-medium tracking-[var(--gui-tracking-xl)] text-muted-foreground">
+        <p className="drai-mono" style={{ margin: 0 }}>
           Trzy sposoby pracy z AI
         </p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-[var(--gui-tracking-s)] sm:text-4xl">
-          Build. Apply. Lead.
-        </h2>
+        <h2 className="mt-3">Build. Apply. Lead.</h2>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {categories.map((category, index) => (
             <article key={category.slug} className="prototype-panel">
-              <span className="text-xs font-medium text-muted-foreground">0{index + 1}</span>
-              <h3 className="mt-3 text-xl font-semibold">{category.label}</h3>
+              <span className="drai-mono">
+                0{index + 1} · oferty <b>[{count(category.slug)}]</b>
+              </span>
+              <h3 className="mt-3">{category.label}</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 {category.description}
               </p>
@@ -88,16 +98,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-muted/25 shadow-[var(--gui-divider-top-shadow)]">
+      <section className="shadow-[inset_0_1px_#e7e1e3]">
         <div className="mx-auto max-w-[1360px] px-5 py-16 lg:px-8 lg:py-20">
           <div className="flex flex-wrap items-end justify-between gap-5">
             <div>
-              <p className="text-xs font-medium tracking-[var(--gui-tracking-xl)] text-muted-foreground">
+              <p className="drai-mono" style={{ margin: 0 }}>
                 Aktualne role
               </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[var(--gui-tracking-s)] sm:text-4xl">
-                Najnowsze oferty
-              </h2>
+              <h2 className="mt-3">Najnowsze oferty</h2>
             </div>
             <Link
               className="inline-flex items-center gap-2 text-sm font-medium text-[var(--gui-link)] hover:underline"

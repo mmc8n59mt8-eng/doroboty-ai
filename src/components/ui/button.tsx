@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[var(--gui-color-1)] text-[var(--gui-text)] [--control-hover-bg:#ffacef] shadow-[var(--gui-edge-shadow)]",
+          "btn-primary bg-[var(--gui-color-1)] text-[var(--gui-text)] [--control-hover-bg:#efcfc4]",
         outline:
           "bg-white shadow-[var(--gui-edge-shadow)] text-[var(--gui-text)] [--control-hover-bg:var(--gui-color-1-transparent)] aria-expanded:bg-[var(--gui-neutral-3-transparent)]",
         secondary:

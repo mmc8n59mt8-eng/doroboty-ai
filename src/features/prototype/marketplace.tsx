@@ -156,9 +156,7 @@ export function JobsPage() {
           <div className="pp-intro-grid">
             <div className="pp-intro-copy">
               <h1>
-                Dobra robota.
-                <br />
-                <span>Z AI w środku.</span>
+                <span className="drai-voice">Dobra robota.</span> Z AI w środku.
               </h1>
               <p>
                 Dla ludzi, którzy tworzą, wdrażają i rozwijają AI.

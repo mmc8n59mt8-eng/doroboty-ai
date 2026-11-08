@@ -289,7 +289,7 @@ test("mobile navigation, light-only appearance and keyboard person selection", a
   await page.reload();
   await expect(page.getByRole("combobox", { name: "Motyw" })).toHaveCount(0);
   await expect(page.locator("html")).not.toHaveClass(/dark/);
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(244, 244, 240)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(247, 243, 239)");
   await page.screenshot({ path: "artifacts/settings-mobile-light.png", fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
@@ -458,7 +458,7 @@ test("legacy dark preference keeps scenario data and renders the light interface
     "Zachowaj mój profil",
   );
   await expect(page.locator("html")).not.toHaveClass(/dark/);
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(244, 244, 240)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(247, 243, 239)");
   await page.getByRole("button", { name: "Zapisz profil", exact: true }).click();
   expect(
     await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!).theme, STORAGE_KEY),
@@ -576,34 +576,41 @@ test("desktop reset synchronizes search, category and facets with the URL", asyn
   );
 });
 
-test("canonical marketplace typography and search geometry match Poster People breakpoints", async ({
+test("marketplace typography and search geometry follow Sieć połączeń at every breakpoint", async ({
   page,
 }) => {
-  for (const [width, title, card] of [
-    [1280, "72px", "28px"],
-    [1100, "58px", "26px"],
-    [850, "52px", "28px"],
-    [390, "43px", "26px"],
-  ] as const) {
+  for (const width of [1280, 1100, 850, 390]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/#/oferty");
-    await expect(page.locator(".pp-intro-copy h1")).toHaveCSS("font-size", title);
-    await expect(page.locator(".pp-job-title").first()).toHaveCSS("font-size", card);
+    const title = page.locator(".pp-intro-copy h1");
+    await expect(title).toHaveCSS("font-family", /Archivo/);
+    await expect(title).toHaveCSS("font-weight", "800");
+    await expect(title.locator(".drai-voice")).toHaveCSS("font-style", "italic");
+    await expect(title.locator(".drai-voice")).toHaveCSS("font-family", /Instrument Serif/);
+    await expect(page.locator(".pp-job-title").first()).toHaveCSS("font-family", /Archivo/);
+    await expect(page.locator(".pp-job-topline").first()).toHaveCSS(
+      "font-family",
+      /JetBrains Mono/,
+    );
     await expect(page.getByRole("textbox", { name: "Szukaj ofert", exact: true })).toBeVisible();
     if (width === 1280) {
       expect((await page.locator(".pp-search-form").boundingBox())!.width).toBe(1200);
-      await expect(page.locator(".pp-salary-tag").first()).toHaveCSS("font-size", "15px");
+      await expect(page.locator(".pp-salary-tag").first()).toHaveCSS("border-radius", "0px");
+      await expect(page.locator(".pp-salary-tag").first()).toHaveCSS("font-weight", "700");
     }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
   }
-  for (const [width, title, salary] of [
-    [1280, "64px", "24px"],
-    [850, "46px", "20px"],
-    [390, "47px", "25px"],
-  ] as const) {
+  for (const width of [1280, 850, 390]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/#/oferty/ai-product-manager");
-    await expect(page.locator(".pp-offer-hero h1")).toHaveCSS("font-size", title);
-    await expect(page.locator(".pp-offer-pay .pp-salary-tag")).toHaveCSS("font-size", salary);
+    await expect(page.locator(".pp-offer-hero h1")).toHaveCSS("font-family", /Archivo/);
+    await expect(page.locator(".pp-offer-hero h1")).toHaveCSS("font-weight", "800");
+    await expect(page.locator(".pp-offer-pay .pp-salary-tag")).toHaveCSS("border-radius", "0px");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
   }
 });
 
@@ -648,39 +655,30 @@ for (const width of [1280, 390])
     await expect(page.getByRole("textbox", { name: "Szukaj ofert", exact: true })).toHaveValue("");
   });
 
-test("homepage surfaces and marketplace action type roles match the shared reference", async ({
+test("homepage surfaces and marketplace actions use the Sieć połączeń construction", async ({
   page,
 }) => {
   await page.goto("/#/");
+  await expect(page.locator(".home-intro h1 .drai-voice")).toHaveCSS("font-style", "italic");
+  await expect(page.locator(".home-intro svg.drai-net")).toHaveAttribute("aria-hidden", "true");
   const cards = page.locator("main article.prototype-panel");
   await expect(cards).toHaveCount(3);
   for (const card of await cards.all()) {
-    await expect(card).toHaveCSS("border-radius", "24px");
-    await expect(card).toHaveCSS("box-shadow", /rgb\(24, 24, 24\).*1px inset/);
+    await expect(card).toHaveCSS("border-radius", "0px");
+    await expect(card).toHaveCSS("border-top-color", "rgb(231, 225, 227)");
+    await expect(card).toHaveCSS("box-shadow", "none");
   }
-  for (const [width, searchSize, offerSize, payLine] of [
-    [1280, "14px", "14px", "34.8px"],
-    [1100, "14px", "13px", "31.9px"],
-    [850, "12px", "12px", "29px"],
-    [700, "12px", "14px", "36.25px"],
-    [600, "12px", "14px", "33.75px"],
-    [390, "12px", "14px", "33.75px"],
-  ] as const) {
+  for (const width of [1280, 1100, 850, 700, 600, 390]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/#/oferty");
     const search = page.getByRole("button", { name: "Szukaj", exact: true });
-    await expect(search).toHaveCSS("font-size", searchSize);
-    await expect(search).toHaveCSS("font-weight", "600");
-    await expect(search).toHaveCSS("letter-spacing", "normal");
-    await expect(search).toHaveCSS("line-height", `${parseInt(searchSize) * 1.5}px`);
-    await expect(search).toHaveCSS("border-top-width", "1px");
-    await expect(search).toHaveCSS("box-shadow", "none");
+    await expect(search).toHaveCSS("border-radius", "0px");
+    await expect(search).toHaveCSS("border-top-color", "rgb(181, 83, 60)");
+    await expect(search).toHaveCSS("background-color", "rgb(243, 220, 212)");
     await page.goto("/#/oferty/ai-product-manager");
     const action = page.locator(".pp-offer-actions a").first();
-    await expect(action).toHaveCSS("font-size", offerSize);
-    await expect(action).toHaveCSS("font-weight", "600");
-    await expect(action).toHaveCSS("line-height", `${parseInt(offerSize) * 1.5}px`);
-    await expect(page.locator(".pp-offer-pay .pp-salary-tag")).toHaveCSS("line-height", payLine);
+    await expect(action).toHaveCSS("border-radius", "0px");
+    await expect(action).toHaveCSS("font-family", /Archivo/);
   }
 });
 

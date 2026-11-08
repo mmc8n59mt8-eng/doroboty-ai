@@ -111,7 +111,7 @@ export function Shell() {
     </>
   );
   return (
-    <div className="min-h-dvh bg-background text-foreground">
+    <div className="drai-theme min-h-dvh text-foreground">
       <a
         href="#main"
         className="skip-link"

@@ -9,6 +9,7 @@
 @import "./application.css";
 @import "./interactions.css";
 @import "./siec-polaczen.css";
+@import "./siec-polaczen-host.css";
 
 @theme inline {
   --color-background: var(--background);
