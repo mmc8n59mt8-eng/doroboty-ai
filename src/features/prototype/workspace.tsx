@@ -14,6 +14,7 @@ import { currentPerson, publishedJobs, stageLabels, MIN_APPLICATION_ANSWER_LENGT
 import { PageTitle, Empty, NotFound, Notice } from "./shell";
 import { CvAttachment } from "./cv-attachment";
 import { MatchScore } from "./match-score";
+import { OwnershipTag } from "./own-contribution";
 import { RecruitingApplication } from "./recruiting-application";
 import { CandidateApplication } from "./candidate-application";
 
@@ -31,10 +32,11 @@ export function PersonPicker() {
   const [params] = useSearchParams();
   const next = params.get("next");
   const audience = params.get("audience");
+  const selectable = state.people.filter((person) => person.selectable !== false);
   const people =
     audience === "candidate" || audience === "employer"
-      ? state.people.filter((person) => person.role === audience)
-      : state.people;
+      ? selectable.filter((person) => person.role === audience)
+      : selectable;
   const safeNext = next && /^\/(?!\/)/.test(next) && !next.startsWith("/auth") ? next : null;
   return (
     <section className="prototype-section max-w-4xl">
@@ -452,9 +454,21 @@ export function ApplicationsPage({ employer = false }: { employer?: boolean }) {
                   </p>
                   <p>{stageLabels[a.stage]}</p>
                 </div>
-                <MatchScore score={a.score} />
+                {employer && a.contribution ? (
+                  <OwnershipTag ownership={a.contribution.ownership} />
+                ) : (
+                  <MatchScore score={a.score} />
+                )}
               </div>
-              {employer && <p className="mt-4 text-muted-foreground">{a.summary}</p>}
+              {employer &&
+                (a.contribution ? (
+                  <div className="contribution-preview">
+                    <p className="contribution-preview-label">Co zrobił(a) samodzielnie</p>
+                    <p>{a.contribution.ownWork}</p>
+                  </div>
+                ) : (
+                  <p className="mt-4 text-muted-foreground">{a.summary}</p>
+                ))}
             </article>
           ))
         ) : (

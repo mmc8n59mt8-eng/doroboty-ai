@@ -33,7 +33,26 @@ describe("coherent browser scenario", () => {
     };
     expect(() => transition(s, input, time)).toThrow("Zatwierdź");
     expect(() => transition(submitted(), { ...input, consent: true }, time)).toThrow("już wysłana");
-    expect(s.applications).toHaveLength(1);
+    expect(s.applications).toHaveLength(initialState().applications.length);
+  });
+  it("seeds eight carded applications for one employer offer without picker personas", () => {
+    const s = initialState();
+    const job = s.jobs[0];
+    const carded = s.applications.filter((a) => a.jobId === job.id && a.contribution);
+    expect(carded).toHaveLength(8);
+    expect(new Set(carded.map((a) => a.contribution!.ownership))).toEqual(
+      new Set(["own", "support"]),
+    );
+    expect(s.applications.filter((a) => a.candidateId === "candidate-anna")).toHaveLength(0);
+    const hidden = s.people.filter((p) => p.selectable === false);
+    expect(hidden).toHaveLength(7);
+    expect(hidden.every((p) => p.role === "candidate")).toBe(true);
+  });
+  it("accepts stored state from before the card", () => {
+    const legacy = structuredClone(initialState());
+    for (const a of legacy.applications) delete a.contribution;
+    for (const p of legacy.people) delete p.selectable;
+    expect(() => stateSchema.parse(legacy)).not.toThrow();
   });
   it("preserves approved sources while profile and notes evolve", () => {
     const s = submitted();

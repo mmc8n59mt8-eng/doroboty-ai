@@ -5,6 +5,7 @@ import { RecordSheet } from "@/components/record-sheet";
 import { CvAttachment } from "./cv-attachment";
 import { MatchScore } from "./match-score";
 import { stageLabels, type Application, type Stage } from "./model";
+import { ContributionCard } from "./own-contribution";
 
 type RecordEvent = { stage: Stage; at: string; note?: string };
 const dateFormat = new Intl.DateTimeFormat("pl-PL", {
@@ -25,7 +26,8 @@ export function ApplicationRecord({
   application: Pick<
     Application,
     "candidateId" | "candidateName" | "jobTitle" | "stage" | "answer" | "cv" | "score" | "summary"
-  >;
+  > &
+    Partial<Pick<Application, "contribution">>;
   companyName: string;
   audience: "candidate" | "employer";
   history: RecordEvent[];
@@ -68,6 +70,15 @@ export function ApplicationRecord({
         <RecordSheet
           label={candidate ? "Twoja wysłana aplikacja" : "Materiały kandydata"}
           sections={[
+            ...(!candidate && application.contribution
+              ? [
+                  {
+                    value: "contribution",
+                    label: "Własny wkład",
+                    content: <ContributionCard contribution={application.contribution} />,
+                  },
+                ]
+              : []),
             {
               value: "answer",
               label: "Odpowiedź",

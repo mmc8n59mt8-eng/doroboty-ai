@@ -1,0 +1,147 @@
+{
+  "note": "Synthetic AIPH3 scenario. Candidates, answers and cards are fictional. Ownership labels and interview questions are prepared scenario content, not a live AI assessment.",
+  "cards": {
+    "application-example": {
+      "ownWork": "Sam zaprojektowałem i przeprowadziłem badania z 12 agentami obsługi, napisałem specyfikację automatycznego przypisywania zgłoszeń i prowadziłem wdrożenie z dwoma programistami. Model i integrację budował zespół.",
+      "usage": "Od marca 2025 korzysta z tego 40 agentów obsługi, około 1 500 zgłoszeń tygodniowo.",
+      "outcome": "Czas pierwszej odpowiedzi spadł o 25%. Przez pierwsze 3 tygodnie 15% zgłoszeń trafiało do złej kolejki, więc dodałem ręczną korektę przez lidera zmiany.",
+      "ownership": "own",
+      "interviewQuestion": "Jak zdecydowałeś, które zgłoszenia zostają przy ręcznym przypisaniu, i kto to zatwierdził?"
+    }
+  },
+  "candidates": [
+    {
+      "id": "candidate-scenario-zofia",
+      "name": "Zofia Lis",
+      "headline": "Product Specialist · AI w sprzedaży",
+      "bio": "Kandydatka w scenariuszu karty własnego wkładu.",
+      "location": "Warszawa",
+      "cv": "Zofia Lis. Product Specialist w firmie SaaS (2022–2026). Członkini zespołu wdrażającego asystenta AI dla działu sprzedaży. Szkolenia użytkowników, zbieranie opinii, dokumentacja.",
+      "exampleScore": 91,
+      "exampleSummary": "Doświadczenie we wdrażaniu AI w sprzedaży i pracy z interesariuszami.",
+      "answer": "Jestem specjalistką z pasją do sztucznej inteligencji i produktów cyfrowych. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałam z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonana, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-02T10:15:00.000Z",
+      "card": {
+        "ownWork": "Byłam w zespole, który wdrażał asystenta AI dla działu sprzedaży. Wspierałam przygotowanie materiałów szkoleniowych i zbierałam opinie użytkowników.",
+        "usage": "Asystent był testowany w pilotażu przez kilka tygodni.",
+        "outcome": "Pilotaż oceniono pozytywnie. Dalsze decyzje podejmował dyrektor produktu.",
+        "ownership": "support",
+        "interviewQuestion": "Które decyzje w pilotażu podjęłaś sama, a które przygotował ktoś inny?"
+      }
+    },
+    {
+      "id": "candidate-scenario-piotr",
+      "name": "Piotr Wrona",
+      "headline": "Product Owner · e-commerce",
+      "bio": "Kandydat w scenariuszu karty własnego wkładu.",
+      "location": "Kraków",
+      "cv": "Piotr Wrona. Product Owner w sklepie internetowym (2021–2026). Członek zespołu wdrażającego chatbota obsługi klienta. Warsztaty, przeglądy sprintów, backlog.",
+      "exampleScore": 88,
+      "exampleSummary": "Doświadczenie w produktach e-commerce i projektach z chatbotem.",
+      "answer": "Jestem doświadczonym specjalistą z pasją do sztucznej inteligencji i produktów cyfrowych. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałem z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonany, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-02T13:40:00.000Z",
+      "card": {
+        "ownWork": "Uczestniczyłem w projekcie wdrożenia chatbota obsługi klienta jako członek zespołu produktowego. Brałem udział w warsztatach i przeglądach sprintów.",
+        "usage": "Chatbot obsługiwał klientów sklepu internetowego.",
+        "outcome": "Projekt zakończył się sukcesem i zwiększył satysfakcję klientów.",
+        "ownership": "support",
+        "interviewQuestion": "Co konkretnie zmieniło się w chatbocie dzięki Twojej pracy i jak to zmierzono?"
+      }
+    },
+    {
+      "id": "candidate-scenario-ewa",
+      "name": "Ewa Dąbrowska",
+      "headline": "Customer Operations Lead · jakość AI",
+      "bio": "Kandydatka w scenariuszu karty własnego wkładu.",
+      "location": "Gdańsk",
+      "cv": "Ewa Dąbrowska. Customer Operations Lead w firmie ubezpieczeniowej (2020–2026). Proces oceny jakości asystenta AI w obsłudze reklamacji, współpraca z działem prawnym, zespół 18 konsultantów.",
+      "exampleScore": 64,
+      "exampleSummary": "Doświadczenie w obsłudze klienta i kontroli jakości odpowiedzi AI.",
+      "answer": "Jestem specjalistką z pasją do sztucznej inteligencji i usprawniania procesów. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałam z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonana, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-03T08:05:00.000Z",
+      "card": {
+        "ownWork": "Sama zbudowałam proces oceny jakości odpowiedzi asystenta AI w obsłudze reklamacji: zestaw 200 przypadków testowych, kryteria oceny i cotygodniowy przegląd z działem prawnym. Prompty i integrację utrzymywał inżynier.",
+        "usage": "Od września 2025 korzysta z tego zespół 18 konsultantów. Każda nowa wersja asystenta przechodzi ten przegląd.",
+        "outcome": "Odsetek odpowiedzi wymagających poprawki spadł z 22% do 9% w 4 miesiące. Raz zatrzymałam wydanie, bo nowa wersja myliła terminy reklamacji.",
+        "ownership": "own",
+        "interviewQuestion": "Jak wybrałaś 200 przypadków testowych i co zrobiłaś, gdy zespół chciał wydać wersję mimo błędu?"
+      }
+    },
+    {
+      "id": "candidate-scenario-kacper",
+      "name": "Kacper Mazur",
+      "headline": "Data Analyst · personalizacja",
+      "bio": "Kandydat w scenariuszu karty własnego wkładu.",
+      "location": "Wrocław",
+      "cv": "Kacper Mazur. Data Analyst w serwisie z treściami (2022–2026). Wsparcie zespołu data science przy projekcie rekomendacji, dashboardy, raporty.",
+      "exampleScore": 85,
+      "exampleSummary": "Doświadczenie w analizie danych i projektach personalizacji.",
+      "answer": "Jestem doświadczonym specjalistą z pasją do sztucznej inteligencji i analizy danych. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałem z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonany, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-03T11:30:00.000Z",
+      "card": {
+        "ownWork": "Wspierałem zespół data science w analizie danych i przygotowaniu dashboardów do projektu personalizacji rekomendacji.",
+        "usage": "Z dashboardów korzystał zespół projektu.",
+        "outcome": "Rekomendacje zostały wdrożone na stronie.",
+        "ownership": "support",
+        "interviewQuestion": "Jakie decyzje zapadły na podstawie Twoich dashboardów i kto je podjął?"
+      }
+    },
+    {
+      "id": "candidate-scenario-natalia",
+      "name": "Natalia Krawczyk",
+      "headline": "Sales Operations Manager · narzędzia AI",
+      "bio": "Kandydatka w scenariuszu karty własnego wkładu.",
+      "location": "Poznań",
+      "cv": "Natalia Krawczyk. Sales Operations Manager w firmie B2B (2021–2026). Wybór i wdrożenie narzędzia AI do streszczania rozmów sprzedażowych, pilotaż, rozszerzenie na 60 handlowców.",
+      "exampleScore": 70,
+      "exampleSummary": "Doświadczenie w operacjach sprzedaży i wdrażaniu narzędzi AI.",
+      "answer": "Jestem specjalistką z pasją do sztucznej inteligencji i usprawniania sprzedaży. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałam z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonana, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-04T09:20:00.000Z",
+      "card": {
+        "ownWork": "Samodzielnie prowadziłam wdrożenie narzędzia AI do streszczania rozmów sprzedażowych: wybór dostawcy, pilotaż z 8 handlowcami i decyzję o rozszerzeniu. Konfigurację techniczną zrobił dział IT.",
+        "usage": "Od stycznia 2026 korzysta z niego 60 handlowców, około 900 rozmów tygodniowo.",
+        "outcome": "Handlowcy oszczędzają około 20 minut dziennie na notatkach (ankieta i logi CRM). Streszczenia rozmów po angielsku były słabe, więc wyłączyłam je dla tego rynku.",
+        "ownership": "own",
+        "interviewQuestion": "Jak sprawdziłaś te 20 minut i dlaczego wyłączyłaś rynek anglojęzyczny zamiast poprawiać narzędzie?"
+      }
+    },
+    {
+      "id": "candidate-scenario-bartosz",
+      "name": "Bartosz Kaczmarek",
+      "headline": "Digital Transformation Consultant",
+      "bio": "Kandydat w scenariuszu karty własnego wkładu.",
+      "location": "Warszawa",
+      "cv": "Bartosz Kaczmarek. Konsultant ds. transformacji cyfrowej (2019–2026). Udział w programie transformacji AI, warsztaty z interesariuszami, wsparcie inicjatyw automatyzacji.",
+      "exampleScore": 93,
+      "exampleSummary": "Doświadczenie w transformacji AI i pracy z wieloma działami.",
+      "answer": "Jestem doświadczonym specjalistą z pasją do sztucznej inteligencji i transformacji cyfrowej. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałem z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonany, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-04T15:45:00.000Z",
+      "card": {
+        "ownWork": "Brałem udział w transformacji AI w firmie, współpracując z wieloma interesariuszami i wspierając inicjatywy automatyzacji procesów.",
+        "usage": "Rozwiązania były wykorzystywane w różnych działach.",
+        "outcome": "Transformacja przyniosła wymierne korzyści biznesowe.",
+        "ownership": "support",
+        "interviewQuestion": "Wybierz jedną inicjatywę: co w niej zrobiłeś sam i jaki był jej mierzalny wynik?"
+      }
+    },
+    {
+      "id": "candidate-scenario-julia",
+      "name": "Julia Szymańska",
+      "headline": "Recruitment Operations · automatyzacje",
+      "bio": "Kandydatka w scenariuszu karty własnego wkładu.",
+      "location": "Łódź",
+      "cv": "Julia Szymańska. Recruitment Operations Specialist (2022–2026). Automatyzacje w Make i GPT dla zespołu rekrutacji: sortowanie CV i szkice odpowiedzi do kandydatów.",
+      "exampleScore": 58,
+      "exampleSummary": "Doświadczenie w automatyzacji procesów rekrutacji.",
+      "answer": "Jestem specjalistką z pasją do sztucznej inteligencji i automatyzacji. Mam doświadczenie we wdrażaniu rozwiązań AI w organizacji. Współpracowałam z wieloma interesariuszami, aby dostarczać wartość biznesową. Moje umiejętności analityczne pozwalają mi podejmować decyzje oparte na danych. Chętnie wniosę swoje doświadczenie do zespołu BrightLabs. Jestem przekonana, że dobrze odnajdę się w tej roli.",
+      "submittedAt": "2026-11-05T12:10:00.000Z",
+      "card": {
+        "ownWork": "Sama napisałam i utrzymuję zestaw automatyzacji w Make i GPT dla zespołu rekrutacji: wstępne sortowanie CV i szkice odpowiedzi do kandydatów. Nikt inny nie pracował nad tym technicznie.",
+        "usage": "Od czerwca 2025 korzysta z tego 5 rekruterek, około 300 CV miesięcznie.",
+        "outcome": "Czas odpowiedzi kandydatom spadł z 6 do 2 dni. Sortowanie CV wyłączyłam po 2 miesiącach, bo odrzucało osoby z przerwą w karierze. Zostały tylko szkice odpowiedzi.",
+        "ownership": "own",
+        "interviewQuestion": "Jak zauważyłaś problem z odrzucaniem kandydatów i co zmieniłaś w procesie po wyłączeniu sortowania?"
+      }
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import marketplace from "./data/marketplace.json" with { type: "json" };
 import people from "./data/people.json" with { type: "json" };
+import contributionScenario from "./data/own-contribution-scenario.json" with { type: "json" };
 import type { JobWithCompany } from "@/features/jobs/types";
 
 const id = z
@@ -72,6 +73,8 @@ const personSchema = profileSchema.extend({
   cv: text,
   exampleScore: z.number().int().min(0).max(100),
   exampleSummary: text,
+  /** Background scenario personas exist only as applicants and are not offered in the picker. */
+  selectable: z.boolean().optional(),
 });
 export const stages = [
   "submitted",
@@ -104,6 +107,18 @@ export const nextStages: Record<Stage, Stage[]> = {
   withdrawn: [],
   hired: [],
 };
+export const contributionSchema = z.object({
+  ownWork: text.min(1),
+  usage: text.min(1),
+  outcome: text.min(1),
+  ownership: z.enum(["own", "support"]),
+  interviewQuestion: text.min(1),
+});
+export type Contribution = z.infer<typeof contributionSchema>;
+export const ownershipLabels: Record<Contribution["ownership"], string> = {
+  own: "Własna odpowiedzialność",
+  support: "Udział lub wsparcie",
+};
 const applicationSchema = z.object({
   id,
   candidateId: id,
@@ -117,6 +132,8 @@ const applicationSchema = z.object({
   generatedAnswer: text,
   score: z.number().int().min(0).max(100),
   summary: text,
+  /** Optional so stored and imported state from before the card remains valid. */
+  contribution: contributionSchema.optional(),
   stage: z.enum(stages),
   events: z
     .array(z.object({ stage: z.enum(stages), at: z.iso.datetime(), note: text }))
@@ -220,7 +237,21 @@ export function initialState(): State {
     version: 1,
     activePersonId: null,
     ...marketplace,
-    people,
+    people: [
+      ...people,
+      ...contributionScenario.candidates.map((candidate) => ({
+        id: candidate.id,
+        name: candidate.name,
+        headline: candidate.headline,
+        bio: candidate.bio,
+        location: candidate.location,
+        cv: candidate.cv,
+        exampleScore: candidate.exampleScore,
+        exampleSummary: candidate.exampleSummary,
+        role: "candidate",
+        selectable: false,
+      })),
+    ],
     applications: [],
     saved: [],
     drafts: [],
@@ -243,7 +274,28 @@ export function initialState(): State {
     summary: bob.exampleSummary,
     stage: "submitted",
     events: [{ stage: "submitted", at: "2026-11-02T09:00:00.000Z", note: "" }],
+    contribution: contributionScenario.cards["application-example"] as Contribution,
   });
+  for (const candidate of contributionScenario.candidates) {
+    const person = state.people.find((x) => x.id === candidate.id)!;
+    state.applications.push({
+      id: `application-card-${candidate.id.replace("candidate-scenario-", "")}`,
+      candidateId: person.id,
+      jobId: job.id,
+      companyId: job.companyId,
+      jobTitle: job.title,
+      candidateName: person.name,
+      cv: person.cv,
+      answer: candidate.answer,
+      sourceNotes: "",
+      generatedAnswer: "",
+      score: person.exampleScore,
+      summary: person.exampleSummary,
+      contribution: candidate.card as Contribution,
+      stage: "submitted",
+      events: [{ stage: "submitted", at: candidate.submittedAt, note: "" }],
+    });
+  }
   return stateSchema.parse(state);
 }
 export function publishedJobs(state: State): JobWithCompany[] {

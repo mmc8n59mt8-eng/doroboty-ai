@@ -718,6 +718,11 @@ test("process sheet keeps notes across keyboard tabs and saves stage history wit
     /^\.?\/cv\/marek-nowak-cv-v1\.pdf$/,
   );
   await page.keyboard.press("Home");
+  await expect(page.getByRole("tab", { name: "Własny wkład", exact: true })).toBeFocused();
+  await expect(page.getByRole("tabpanel", { name: "Własny wkład", exact: true })).toContainText(
+    "Dopytaj na rozmowie",
+  );
+  await page.keyboard.press("ArrowRight");
   await expect(answer).toBeFocused();
   await expect(page.getByRole("tabpanel", { name: "Odpowiedź", exact: true })).toContainText(
     "Przesłana aplikacja",
