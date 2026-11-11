@@ -6,6 +6,7 @@ import type { JobWithCompany } from "./types";
 import { categoryLabels, functionLabels, remoteLabels, seniorityLabels } from "./presentation";
 import { CompanyLogo } from "./company-logo";
 import { SalaryFact } from "./salary-fact";
+import posthog, { isPostHogConfigured } from "@/lib/posthog";
 export function JobCard({ job, saved }: { job: JobWithCompany; saved?: boolean }) {
   const { run } = usePrototype();
   return (
@@ -49,7 +50,16 @@ export function JobCard({ job, saved }: { job: JobWithCompany; saved?: boolean }
               size="icon-sm"
               aria-label={`Zapisz ofertę: ${job.title}`}
               aria-pressed={saved}
-              onClick={() => run({ type: "toggle_saved", jobId: job.id })}
+              onClick={() => {
+                if (run({ type: "toggle_saved", jobId: job.id })) {
+                  if (isPostHogConfigured)
+                    posthog.capture("job_saved_toggled", {
+                      job_id: job.id,
+                      is_saved: !saved,
+                      source: "job_card",
+                    });
+                }
+              }}
             >
               <Bookmark className="pp-icon" />
             </Button>
