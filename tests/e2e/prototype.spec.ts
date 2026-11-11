@@ -1042,3 +1042,31 @@ for (const width of [1280, 390]) {
     expect(await banner.evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
   });
 }
+
+for (const width of [1280, 390]) {
+  test(`homepage person picker offers candidates and recruiters at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    await page.getByRole("link", { name: "Wybierz osobę", exact: true }).click();
+    for (const group of ["Kandydaci", "Pracodawcy", "Prowadzący"])
+      await expect(page.getByRole("heading", { name: group, exact: true, level: 2 })).toBeVisible();
+    const employers = page.getByRole("region", { name: "Pracodawcy" });
+    await expect(employers.getByRole("heading", { level: 3 })).toHaveText([
+      "Karolina Wiśniewska",
+      "Tomasz Zieliński",
+    ]);
+    await expect(
+      page.getByRole("region", { name: "Kandydaci" }).getByRole("heading", { level: 3 }),
+    ).toHaveText(["Anna Kowalska", "Marek Nowak"]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
+    await employers.getByRole("button", { name: "Wejdź jako Karolina Wiśniewska" }).click();
+    await expect(page).toHaveURL(/#\/app\/oferty$/);
+    await expect(
+      page.getByRole("heading", { name: "Moje oferty", exact: true, level: 1 }),
+    ).toBeVisible();
+  });
+}

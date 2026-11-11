@@ -38,38 +38,70 @@ export function PersonPicker() {
       ? selectable.filter((person) => person.role === audience)
       : selectable;
   const safeNext = next && /^\/(?!\/)/.test(next) && !next.startsWith("/auth") ? next : null;
+  const groups = personGroups
+    .map((group) => ({ ...group, people: people.filter((p) => p.role === group.role) }))
+    .filter((group) => group.people.length > 0);
   return (
     <section className="prototype-section max-w-4xl">
       <h1>Wybierz osobę</h1>
       <p className="mt-4 mb-8 text-muted-foreground">
         Wybierz profil, z którego chcesz korzystać w prototypie. Hasło nie jest potrzebne.
       </p>
-      <div className="grid gap-5 sm:grid-cols-2">
-        {people.map((person) => (
-          <article key={person.id} className="prototype-panel">
-            <h2 className="text-xl">{person.name}</h2>
-            <p className="my-4 text-muted-foreground">{person.headline}</p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                run({ type: "select_person", id: person.id });
-                navigate(
-                  person.role === "candidate"
-                    ? (safeNext ?? "/app")
-                    : person.role === "employer"
-                      ? "/app/oferty"
-                      : "/app/case",
-                );
-              }}
-            >
-              Wejdź jako {person.name}
-            </Button>
-          </article>
-        ))}
-      </div>
+      {groups.map((group) => (
+        <section
+          key={group.role}
+          aria-labelledby={`people-${group.role}`}
+          className="mb-10 last:mb-0"
+        >
+          <h2 id={`people-${group.role}`} className="text-2xl">
+            {group.title}
+          </h2>
+          <p className="mt-2 mb-5 text-muted-foreground">{group.description}</p>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {group.people.map((person) => (
+              <article key={person.id} className="prototype-panel">
+                <h3 className="text-xl">{person.name}</h3>
+                <p className="my-4 text-muted-foreground">{person.headline}</p>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    run({ type: "select_person", id: person.id });
+                    navigate(
+                      person.role === "candidate"
+                        ? (safeNext ?? "/app")
+                        : person.role === "employer"
+                          ? "/app/oferty"
+                          : "/app/case",
+                    );
+                  }}
+                >
+                  Wejdź jako {person.name}
+                </Button>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
     </section>
   );
 }
+const personGroups = [
+  {
+    role: "candidate",
+    title: "Kandydaci",
+    description: "Szukasz pracy: przeglądasz oferty, zapisujesz je i aplikujesz.",
+  },
+  {
+    role: "employer",
+    title: "Pracodawcy",
+    description: "Rekrutujesz: publikujesz oferty, przeglądasz kandydatów i prowadzisz proces.",
+  },
+  {
+    role: "operator",
+    title: "Prowadzący",
+    description: "Materiały case study dla prowadzących kurs.",
+  },
+] as const;
 export function RequireRole({
   role,
   children,

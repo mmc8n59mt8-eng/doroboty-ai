@@ -277,7 +277,7 @@ export function Shell() {
                 ) : (
                   <>
                     <Link
-                      to="/auth/sign-in?audience=candidate"
+                      to="/auth/sign-in"
                       className={cn(
                         buttonVariants({ variant: "outline", size: "lg" }),
                         "text-sm font-medium max-sm:min-h-10 max-sm:px-[var(--gui-space-xs)] max-sm:text-sm",
