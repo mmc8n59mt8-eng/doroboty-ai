@@ -32,6 +32,15 @@ export function Notice({ children }: { children: ReactNode }) {
     </div>
   );
 }
+/** Always-visible disclosure for the public deployment: this is a teaching prototype. */
+export function PrototypeBanner() {
+  return (
+    <p role="note" aria-label="Informacja o prototypie" className="prototype-banner">
+      <strong>Prototyp edukacyjny</strong> — firmy, oferty i osoby są fikcyjne. Nic nie jest
+      wysyłane: wpisane dane zostają w tej przeglądarce.
+    </p>
+  );
+}
 export function PageTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
   return (
     <div className="page-heading">
@@ -187,6 +196,7 @@ export function Shell() {
             </nav>
           </aside>
           <div className="workspace">
+            <PrototypeBanner />
             <div className="topbar">
               <span>
                 {person.role === "candidate"
@@ -204,6 +214,7 @@ export function Shell() {
         </div>
       ) : (
         <>
+          <PrototypeBanner />
           <header className="bg-background/95 shadow-[var(--gui-divider-bottom-shadow)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
             <div className="mx-auto flex h-16 max-w-[1360px] items-center justify-between gap-4 px-5 lg:px-8">
               <Link

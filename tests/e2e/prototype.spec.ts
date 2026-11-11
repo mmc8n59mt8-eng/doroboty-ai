@@ -1019,3 +1019,26 @@ test("candidate snapshot supports custom CV and long content at desktop and mobi
     record.answer,
   );
 });
+
+for (const width of [1280, 390]) {
+  test(`prototype disclosure is visible without interaction on public and workspace screens at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    const banner = page.getByRole("note", { name: "Informacja o prototypie" });
+    for (const path of ["/", "/#/oferty"]) {
+      await page.goto(path);
+      await expect(banner).toBeVisible();
+      await expect(banner).toContainText("Prototyp edukacyjny");
+      await expect(banner).toContainText("fikcyjne");
+      await expect(banner).toContainText("Nic nie jest wysyłane");
+      const box = await banner.boundingBox();
+      expect(box!.y).toBeLessThan(5);
+      expect(box!.width).toBeLessThanOrEqual(width);
+    }
+    await choose(page, "Karolina Wiśniewska");
+    await page.goto("/#/app");
+    await expect(banner).toBeVisible();
+    expect(await banner.evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
+  });
+}
