@@ -16,6 +16,7 @@ import { CvAttachment } from "./cv-attachment";
 import { MatchScore } from "./match-score";
 import { RecruitingApplication } from "./recruiting-application";
 import { CandidateApplication } from "./candidate-application";
+import posthog, { isPostHogConfigured } from "@/lib/posthog";
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -50,7 +51,10 @@ export function PersonPicker() {
             <Button
               variant="outline"
               onClick={() => {
-                run({ type: "select_person", id: person.id });
+                if (run({ type: "select_person", id: person.id })) {
+                  if (isPostHogConfigured)
+                    posthog.capture("person_selected", { role: person.role });
+                }
                 navigate(
                   person.role === "candidate"
                     ? (safeNext ?? "/app")
@@ -156,8 +160,10 @@ export function ProfilePage({ preview = false }: { preview?: boolean }) {
           location: String(data.get("location")),
         },
       })
-    )
+    ) {
+      if (isPostHogConfigured) posthog.capture("profile_saved");
       setMessage("Profil został zapisany.");
+    }
   }
   return (
     <>
@@ -282,6 +288,16 @@ export function ApplyPage() {
       return;
     }
     if (run({ type: "submit", jobId: job!.id, notes, generated, answer, consent })) {
+      if (isPostHogConfigured) {
+        const logAttributes = {
+          job_id: job!.id,
+          job_category: job!.category,
+          remote_status: job!.remoteStatus,
+          seniority: job!.seniority,
+        };
+        posthog.capture("application_submitted", logAttributes);
+        posthog.logger.info("application_submitted", logAttributes);
+      }
       submittedOnce.current = true;
       setSubmitted(true);
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -387,8 +403,14 @@ export function ApplyPage() {
                 disabled={submitted}
                 variant="outline"
                 onClick={() => {
-                  if (run({ type: "draft", jobId: job.id, notes, generated, answer }))
+                  if (run({ type: "draft", jobId: job.id, notes, generated, answer })) {
+                    if (isPostHogConfigured)
+                      posthog.capture("application_draft_saved", {
+                        job_id: job.id,
+                        job_category: job.category,
+                      });
                     setMessage("Szkic został zapisany.");
+                  }
                 }}
               >
                 Zapisz szkic

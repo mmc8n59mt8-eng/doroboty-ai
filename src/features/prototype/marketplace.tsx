@@ -26,6 +26,7 @@ import { usePrototype } from "./store";
 import { currentPerson, publishedJobs } from "./model";
 import { NotFound } from "./shell";
 import { cn } from "@/lib/utils";
+import posthog, { isPostHogConfigured } from "@/lib/posthog";
 
 function LocalMap({ jobs }: { jobs: JobWithCompany[] }) {
   const [selected, setSelected] = useState<string | null>(null);
@@ -141,11 +142,20 @@ export function JobsPage() {
     const data = new FormData(e.currentTarget);
     const next = new URLSearchParams(params);
     next.delete("page");
-    for (const key of ["query", "location"]) {
-      const value = String(data.get(key) ?? "").trim();
+    const query = String(data.get("query") ?? "").trim();
+    const location = String(data.get("location") ?? "").trim();
+    for (const [key, value] of [
+      ["query", query],
+      ["location", location],
+    ]) {
       if (value) next.set(key, value);
       else next.delete(key);
     }
+    if (isPostHogConfigured)
+      posthog.capture("job_search_submitted", {
+        has_query: Boolean(query),
+        has_location: Boolean(location),
+      });
     setParams(next);
   }
   const locations = [...new Set(all.flatMap((x) => x.locations))];
@@ -430,7 +440,16 @@ export function JobPage() {
                     variant="outline"
                     aria-label="Zapisz ofertę"
                     aria-pressed={saved}
-                    onClick={() => run({ type: "toggle_saved", jobId: job.id })}
+                    onClick={() => {
+                      if (run({ type: "toggle_saved", jobId: job.id })) {
+                        if (isPostHogConfigured)
+                          posthog.capture("job_saved_toggled", {
+                            job_id: job.id,
+                            is_saved: !saved,
+                            source: "job_detail",
+                          });
+                      }
+                    }}
                   >
                     <Bookmark className={cn(saved && "fill-current")} />
                     Zapisz ofertę

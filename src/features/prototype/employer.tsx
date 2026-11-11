@@ -16,6 +16,7 @@ import { currentPerson, jobSchema } from "./model";
 import { usePrototype } from "./store";
 import { Field } from "./workspace";
 import { Empty, NotFound, PageTitle } from "./shell";
+import posthog, { isPostHogConfigured } from "@/lib/posthog";
 
 export function EmployerJobs() {
   const { state } = usePrototype();
@@ -133,7 +134,22 @@ export function EmployerJobEditor() {
       );
       return;
     }
-    if (run({ type: "publish", job: parsed.data })) navigate("/app/oferty");
+    if (run({ type: "publish", job: parsed.data })) {
+      if (isPostHogConfigured) {
+        const logAttributes = {
+          is_new_job: !existing,
+          job_category: parsed.data.category,
+          remote_status: parsed.data.remoteStatus,
+          seniority: parsed.data.seniority,
+          contract: parsed.data.contract,
+          has_salary_range:
+            parsed.data.salaryMin !== undefined && parsed.data.salaryMax !== undefined,
+        };
+        posthog.capture("job_published", logAttributes);
+        posthog.logger.info("job_published", logAttributes);
+      }
+      navigate("/app/oferty");
+    }
   }
   return (
     <>
@@ -171,6 +187,8 @@ export function EmployerJobEditor() {
                 `${title}\n\nO roli\n${source.trim().slice(0, 10000)}\n\nJak pracujemy\nŁączymy potrzeby użytkowników, odpowiedzialne wykorzystanie AI i mierzalne efekty.\n\nProces rekrutacji\nPrześlij aplikację i opowiedz o projekcie, w którym Twoje decyzje wpłynęły na wynik.`,
               );
               setApproved(false);
+              if (isPostHogConfigured)
+                posthog.capture("job_description_generated", { is_new_job: !existing });
             }}
           >
             Przygotuj opis z AI
@@ -286,8 +304,10 @@ export function CompanyEditor() {
         name: String(data.get("name")),
         description: String(data.get("description")),
       })
-    )
+    ) {
+      if (isPostHogConfigured) posthog.capture("company_profile_saved");
       setMessage("Dane firmy zostały zapisane.");
+    }
   }
   return (
     <>
