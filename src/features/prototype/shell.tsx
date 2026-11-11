@@ -19,6 +19,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { currentPerson } from "./model";
 import { usePrototype } from "./store";
 import { cn } from "@/lib/utils";
+import { analyticsEnabled } from "@/lib/analytics";
 const navigation = [
   { to: "/oferty", label: "Oferty" },
   { to: "/metodologia", label: "Metodologia" },
@@ -36,8 +37,10 @@ export function Notice({ children }: { children: ReactNode }) {
 export function PrototypeBanner() {
   return (
     <p role="note" aria-label="Informacja o prototypie" className="prototype-banner">
-      <strong>Prototyp edukacyjny</strong> — firmy, oferty i osoby są fikcyjne. Nic nie jest
-      wysyłane: wpisane dane zostają w tej przeglądarce.
+      <strong>Prototyp edukacyjny</strong> — firmy, oferty i osoby są fikcyjne.{" "}
+      {analyticsEnabled
+        ? "Wpisane dane zostają w tej przeglądarce; statystyki korzystania i nagrania sesji trafiają do PostHog."
+        : "Nic nie jest wysyłane: wpisane dane zostają w tej przeglądarce."}
     </p>
   );
 }

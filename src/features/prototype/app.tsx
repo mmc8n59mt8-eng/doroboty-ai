@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route, Navigate } from "react-router";
 import { PrototypeProvider } from "./store";
+import { AnalyticsPageviews } from "./analytics-pageviews";
 import { Shell, NotFound } from "./shell";
 import HomePage from "./home";
 import MethodologyPage from "./methodology";
@@ -154,6 +155,7 @@ export function App() {
     <ErrorBoundary>
       <PrototypeProvider>
         <HashRouter>
+          <AnalyticsPageviews />
           <AppRoutes />
         </HashRouter>
       </PrototypeProvider>
