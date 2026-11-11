@@ -239,6 +239,24 @@ test("unreadable save stays untouched while the user works in memory", async ({ 
   await page.goto("/#/app/settings");
   await expect(page.getByRole("button", { name: "Pobierz poprzedni zapis" })).toBeVisible();
 });
+test("a crashing screen shows recovery actions instead of a blank page", async ({ page }) => {
+  await choose(page, "Anna Kowalska");
+  const saved = await page.evaluate((key) => localStorage.getItem(key), STORAGE_KEY);
+  expect(saved).not.toBe(null);
+  await page.goto("/#/diagnostyka/blad");
+  await expect(page.getByRole("heading", { name: "Coś poszło nie tak" })).toBeVisible();
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Pobierz kopię zapisu" }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe("doroboty-zapis-po-bledzie.txt");
+  await page.getByRole("button", { name: "Resetuj scenariusz" }).click();
+  await page.getByRole("button", { name: "Anuluj" }).click();
+  expect(await page.evaluate((key) => localStorage.getItem(key), STORAGE_KEY)).toBe(saved);
+  await page.getByRole("button", { name: "Resetuj scenariusz" }).click();
+  await page.getByRole("button", { name: "Tak, usuń zapis i zacznij od nowa" }).click();
+  await expect(page).toHaveURL(/#\/$/);
+  await expect(page.getByRole("heading", { name: "Coś poszło nie tak" })).toHaveCount(0);
+});
 test("storage denial keeps the app usable and offers export", async ({ page }) => {
   await page.addInitScript(() => {
     Object.defineProperty(Storage.prototype, "setItem", {

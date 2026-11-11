@@ -26,6 +26,8 @@ npm run dev
 
 Open http://127.0.0.1:3001. No environment file, account, database or additional service is required. Package installation requires access to the npm registry.
 
+Before a live demo, follow the [demo checklist and recovery plan](docs/DEMO_CHECKLIST.md) (Polish).
+
 Select Anna or Marek as a candidate, Karolina or Tomasz as an employer, or the instructor. Publish a job, apply, switch person and record the employer decision. Changes survive reload in this browser; settings provide export, import and reset. AI and scores simulate prepared scenarios. Use example CVs only.
 
 ## Build and verify

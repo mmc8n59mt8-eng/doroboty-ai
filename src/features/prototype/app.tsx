@@ -17,6 +17,7 @@ import {
 import { EmployerJobs, EmployerJobEditor, CompanyEditor } from "./employer";
 import { SettingsPage, PrivacyPage } from "./settings";
 import { CasePage } from "./case";
+import { ErrorBoundary, CrashRehearsal } from "./error-boundary";
 function AppRoutes() {
   return (
     <Routes>
@@ -142,6 +143,7 @@ function AppRoutes() {
           }
         />
         <Route path="app/settings" element={<SettingsPage />} />
+        <Route path="diagnostyka/blad" element={<CrashRehearsal />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
@@ -149,10 +151,12 @@ function AppRoutes() {
 }
 export function App() {
   return (
-    <PrototypeProvider>
-      <HashRouter>
-        <AppRoutes />
-      </HashRouter>
-    </PrototypeProvider>
+    <ErrorBoundary>
+      <PrototypeProvider>
+        <HashRouter>
+          <AppRoutes />
+        </HashRouter>
+      </PrototypeProvider>
+    </ErrorBoundary>
   );
 }
